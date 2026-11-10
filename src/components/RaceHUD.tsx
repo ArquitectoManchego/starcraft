@@ -25,7 +25,7 @@ export const RaceHUD: React.FC<RaceHUDProps> = ({
 
     soundEngine.playAbilitySound(ability.soundType);
     setIsSpeaking(true);
-    soundEngine.playVoiceQuote(entity.quote, entity.race);
+    soundEngine.playEntityVoice(entity);
     setTimeout(() => setIsSpeaking(false), 2500);
 
     // Floating combat text
@@ -160,7 +160,7 @@ export const RaceHUD: React.FC<RaceHUDProps> = ({
           <button
             onClick={() => {
               setIsSpeaking(true);
-              soundEngine.playVoiceQuote(entity.quote, entity.race);
+              soundEngine.playEntityVoice(entity);
               setTimeout(() => setIsSpeaking(false), 2500);
             }}
             className="text-xs bg-slate-800 hover:bg-slate-700 text-white px-2 py-0.5 rounded border border-slate-600 transition"
@@ -185,46 +185,46 @@ export const RaceHUD: React.FC<RaceHUDProps> = ({
           <button
             onClick={() => handleBasicAction('Mover', 'special')}
             title="Mover (M)"
-            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group"
+            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group overflow-hidden"
           >
-            <span className="text-sm">🧭</span>
-            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono text-cyan-400">M</span>
+            <img src="/icons/move.png" alt="Mover" className="w-7 h-7 object-contain" />
+            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono font-bold text-cyan-400 drop-shadow">M</span>
           </button>
 
           <button
             onClick={() => handleBasicAction('Detener', 'special')}
             title="Detener (S)"
-            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group"
+            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group overflow-hidden"
           >
-            <span className="text-sm">🛑</span>
-            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono text-cyan-400">S</span>
+            <img src="/icons/stop.png" alt="Detener" className="w-7 h-7 object-contain" />
+            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono font-bold text-cyan-400 drop-shadow">S</span>
           </button>
 
           <button
             onClick={() => handleBasicAction('Mantener Posición', 'special')}
             title="Mantener Posición (H)"
-            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group"
+            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group overflow-hidden"
           >
-            <span className="text-sm">🛡️</span>
-            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono text-cyan-400">H</span>
+            <img src="/icons/hold.png" alt="Mantener" className="w-7 h-7 object-contain" />
+            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono font-bold text-cyan-400 drop-shadow">H</span>
           </button>
 
           <button
             onClick={() => handleBasicAction('Patrullar', 'special')}
             title="Patrullar (P)"
-            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group"
+            className="w-10 h-10 md:w-11 md:h-11 bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-cyan-400 rounded flex flex-col items-center justify-center text-xs transition relative group overflow-hidden"
           >
-            <span className="text-sm">🔄</span>
-            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono text-cyan-400">P</span>
+            <img src="/icons/patrol.png" alt="Patrullar" className="w-7 h-7 object-contain" />
+            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono font-bold text-cyan-400 drop-shadow">P</span>
           </button>
 
           <button
             onClick={() => handleBasicAction('Atacar', 'attack')}
             title="Atacar (A)"
-            className="w-10 h-10 md:w-11 md:h-11 bg-red-950/60 hover:bg-red-900/80 active:scale-95 border border-red-700 hover:border-red-400 rounded flex flex-col items-center justify-center text-xs transition relative group"
+            className="w-10 h-10 md:w-11 md:h-11 bg-red-950/60 hover:bg-red-900/80 active:scale-95 border border-red-700 hover:border-red-400 rounded flex flex-col items-center justify-center text-xs transition relative group overflow-hidden"
           >
-            <span className="text-sm">⚔️</span>
-            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono text-red-400">A</span>
+            <img src="/icons/attack.png" alt="Atacar" className="w-7 h-7 object-contain" />
+            <span className="absolute bottom-0.5 right-1 text-[8px] font-sc2-mono font-bold text-red-400 drop-shadow">A</span>
           </button>
 
           {/* Rows 2 & 3: Character Unique Abilities */}
@@ -238,7 +238,7 @@ export const RaceHUD: React.FC<RaceHUDProps> = ({
                 onClick={() => handleAbilityClick(ability)}
                 disabled={isCoolingDown}
                 title={`${ability.name} (${ability.hotkey}) - ${ability.description}`}
-                className={`w-10 h-10 md:w-11 md:h-11 relative rounded flex flex-col items-center justify-center text-xs transition border active:scale-95 group ${
+                className={`w-10 h-10 md:w-11 md:h-11 relative rounded flex flex-col items-center justify-center text-xs transition border active:scale-95 group overflow-hidden ${
                   isCoolingDown
                     ? 'bg-slate-900/60 border-slate-800 cursor-not-allowed opacity-60'
                     : entity.race === 'terran'
@@ -248,16 +248,20 @@ export const RaceHUD: React.FC<RaceHUDProps> = ({
                     : 'bg-amber-950/70 hover:bg-amber-900 border-amber-700 hover:border-amber-400 text-white shadow-[0_0_8px_rgba(250,204,21,0.2)]'
                 }`}
               >
-                <span className="text-sm md:text-base">{ability.icon}</span>
+                {ability.iconImg ? (
+                  <img src={ability.iconImg} alt={ability.name} className="w-7 h-7 object-contain rounded-xs" />
+                ) : (
+                  <span className="text-sm md:text-base">{ability.icon}</span>
+                )}
 
                 {/* Hotkey Letter */}
-                <span className="absolute bottom-0.5 right-1 text-[9px] font-sc2-mono font-bold text-yellow-300">
+                <span className="absolute bottom-0.5 right-1 text-[9px] font-sc2-mono font-bold text-yellow-300 drop-shadow">
                   {ability.hotkey}
                 </span>
 
                 {/* Cooldown Overlay */}
                 {isCoolingDown && (
-                  <div className="absolute inset-0 bg-black/70 flex items-center justify-center text-red-400 font-bold font-sc2-mono text-xs rounded">
+                  <div className="absolute inset-0 bg-black/75 flex items-center justify-center text-red-400 font-bold font-sc2-mono text-xs rounded">
                     {cd}s
                   </div>
                 )}

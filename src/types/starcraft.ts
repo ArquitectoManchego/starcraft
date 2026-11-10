@@ -6,6 +6,7 @@ export interface Ability {
   name: string;
   hotkey: string;
   icon: string;
+  iconImg?: string;
   description: string;
   energyCost?: number;
   cooldown?: number;
@@ -15,16 +16,9 @@ export interface Ability {
 }
 
 export interface ModelConfig {
-  meshType: 
-    | 'marine' | 'siege_tank' | 'battlecruiser' | 'thor' | 'ghost' | 'banshee' | 'reaper' | 'viking'
-    | 'raynor' | 'tychus' | 'nova' | 'kerrigan_ghost' | 'swann' | 'horner' | 'mengsk'
-    | 'command_center' | 'barracks' | 'factory' | 'starport' | 'bunker'
-    | 'zergling' | 'hydralisk' | 'ultralisk' | 'mutalisk' | 'roach' | 'baneling' | 'brood_lord' | 'infestor'
-    | 'kerrigan_queen' | 'abathur' | 'dehaka' | 'zagara' | 'stukov' | 'overmind'
-    | 'hatchery' | 'spawning_pool' | 'spire' | 'evolution_chamber' | 'ultralisk_cavern'
-    | 'zealot' | 'stalker' | 'colossus' | 'carrier' | 'high_templar' | 'dark_templar' | 'archon' | 'immortal' | 'void_ray'
-    | 'artanis' | 'zeratul' | 'alarak' | 'fenix' | 'tassadar' | 'karax'
-    | 'nexus' | 'pylon' | 'gateway' | 'stargate' | 'photon_cannon';
+  meshType: string;
+  glbPath?: string;
+  texturePath?: string;
   primaryColor: string;
   secondaryColor: string;
   glowColor: string;
@@ -48,6 +42,9 @@ export interface SC2Entity {
   attributeTypes: string[];
   quote: string;
   quotes: string[];
+  portraitPath: string;
+  audioClips?: string[];
+  backgroundScene: string;
   description: string;
   lore: string;
   stats: {
@@ -79,7 +76,7 @@ export interface SC2Entity {
   modelConfig: ModelConfig;
 }
 
-export type EnvironmentTheme = 'marsara' | 'char' | 'shakuras' | 'aiur' | 'braxis' | 'space';
+export type EnvironmentTheme = 'hyperion' | 'char' | 'aiur' | 'marsara' | 'shakuras' | 'space' | 'braxis';
 
 export interface ViewportSettings {
   autoRotate: boolean;
@@ -89,4 +86,5 @@ export interface ViewportSettings {
   theme: EnvironmentTheme;
   lightingIntensity: number;
   cameraPreset: 'isometric' | 'front' | 'top' | 'cinematic';
+  showBackgroundScene: boolean;
 }

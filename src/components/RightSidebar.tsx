@@ -59,9 +59,9 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
           <button
             onClick={() => {
               soundEngine.playUIClick(entity.race);
-              soundEngine.playVoiceQuote(entity.quote, entity.race);
+              soundEngine.playEntityVoice(entity);
             }}
-            title="Reproducir frase clásica"
+            title="Reproducir voz clásica original"
             className="p-2 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white transition"
           >
             <Volume2 className="w-4 h-4 text-cyan-400" />
@@ -167,7 +167,7 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
                     key={idx}
                     onClick={() => {
                       soundEngine.playUIClick(entity.race);
-                      soundEngine.playVoiceQuote(q, entity.race);
+                      soundEngine.playEntityVoice(entity);
                     }}
                     className="p-2 rounded bg-slate-900/40 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs italic cursor-pointer flex items-center justify-between group transition"
                   >
@@ -426,6 +426,53 @@ export const RightSidebar: React.FC<RightSidebarProps> = ({
                   onChange={(e) => onUpdateSettings({ showPostProcessing: e.target.checked })}
                   className="w-4 h-4 accent-cyan-500 cursor-pointer"
                 />
+              </div>
+
+              <div className="flex items-center justify-between border-t border-slate-800 pt-2">
+                <span className="text-slate-300 flex items-center gap-1.5">
+                  <span>🌌</span>
+                  <span>Fondo Cinemático Original</span>
+                </span>
+                <input
+                  type="checkbox"
+                  checked={settings.showBackgroundScene}
+                  onChange={(e) => onUpdateSettings({ showBackgroundScene: e.target.checked })}
+                  className="w-4 h-4 accent-cyan-500 cursor-pointer"
+                />
+              </div>
+            </div>
+
+            {/* Ripped Asset Inspector Card */}
+            <div className="p-3 rounded bg-slate-900/60 border border-slate-800 space-y-2 font-sc2-mono text-[11px]">
+              <div className="text-cyan-400 font-bold uppercase tracking-wider flex items-center justify-between">
+                <span>VERIFICACIÓN ASSETS RIPEADOS</span>
+                <span className="text-emerald-400">100% BLIZZARD</span>
+              </div>
+              <div className="space-y-1 text-slate-400">
+                <div className="flex justify-between border-b border-slate-800/60 pb-1">
+                  <span>Modelo 3D:</span>
+                  <span className="text-slate-200 font-bold truncate max-w-[170px]">
+                    {entity.modelConfig.glbPath ? entity.modelConfig.glbPath.replace('/models/', '') : 'Malla Procedural'}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-800/60 pb-1">
+                  <span>Textura PBR:</span>
+                  <span className="text-slate-200 font-bold truncate max-w-[170px]">
+                    {entity.modelConfig.texturePath ? entity.modelConfig.texturePath.replace('/models/', '') : 'Nativa / PBR'}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-slate-800/60 pb-1">
+                  <span>Retrato Transmisión:</span>
+                  <span className="text-slate-200 font-bold truncate max-w-[170px]">
+                    {entity.portraitPath ? entity.portraitPath.replace('/portraits/', '') : 'Holograma 3D'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Escena Cinemática:</span>
+                  <span className="text-slate-200 font-bold truncate max-w-[170px]">
+                    {entity.backgroundScene.replace('/backgrounds/', '')}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

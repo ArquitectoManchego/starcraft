@@ -20,6 +20,16 @@ export const SC2_ENTITIES: SC2Entity[] = [
       "Armadura sellada y lista.",
       "¡Sírveme otro cargador!"
     ],
+    portraitPath: '/portraits/marine.jpg',
+    audioClips: [
+      '/sounds/marine_commander.mp3',
+      '/sounds/marine_shoot.mp3',
+      '/sounds/marine_jacked.mp3',
+      '/sounds/marine_standin.mp3',
+      '/sounds/marine_pieceme.mp3',
+      '/sounds/marine_stimpack.mp3'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
     description: "La columna vertebral del ejército Terran. Soldados equipados con servoarmaduras CMC y rifles de Gauss C-14 que disparan púas de metal a velocidades hipersónicas.",
     lore: "Reclutados a menudo de las colonias penales de la Confederación y reacondicionados neuralmente por el Dominio Terran, los marines enfrentan las peores pesadillas del sector Koprulu armados con poco más que coraje blindado y adrenalina sintética.",
     stats: {
@@ -42,14 +52,15 @@ export const SC2_ENTITIES: SC2Entity[] = [
     },
     counters: {
       strongAgainst: ['Hydralisk', 'Mutalisk', 'Zealot'],
-      weakAgainst: ['Siege Tank', 'Baneling', 'Colossus']
+      weakAgainst: ['Siege Tank Crucio', 'Baneling', 'Colossus']
     },
     abilities: [
       {
         id: 'stimpack',
-        name: 'Paquete de Estimulantes (Stimpack)',
+        name: 'Estimulantes (Stimpack)',
         hotkey: 'T',
         icon: '💉',
+        iconImg: '/icons/stimpack.png',
         description: "Inyecta un cóctel sintético de adrenalina que aumenta la velocidad de movimiento y disparo un 50% a costa de 10 puntos de vida.",
         cooldown: 11,
         animationTrigger: 'stim',
@@ -61,6 +72,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
         name: 'Ráfaga de Gauss C-14',
         hotkey: 'A',
         icon: '💥',
+        iconImg: '/icons/attack.png',
         description: "Dispara ráfagas continuas de proyectiles de uranio empobrecido de 8 mm.",
         animationTrigger: 'attack',
         soundType: 'laser',
@@ -69,11 +81,12 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'marine',
-      primaryColor: '#2563eb', // Dominion Blue
+      glbPath: '/models/marine.glb',
+      primaryColor: '#2563eb',
       secondaryColor: '#475569',
       glowColor: '#38bdf8',
-      scale: 1.0,
-      yOffset: 0,
+      scale: 1.1,
+      yOffset: -0.1,
       glowIntensity: 1.2
     }
   },
@@ -93,6 +106,14 @@ export const SC2_ENTITIES: SC2Entity[] = [
       "¡Objetivo fijado, disparando cañón de choque!",
       "¿Quién quiere fuegos artificiales?"
     ],
+    portraitPath: '/portraits/siege_tank.jpg',
+    audioClips: [
+      '/sounds/siegetank_what00.ogg',
+      '/sounds/siegetank_what01.ogg',
+      '/sounds/siegetank_what02.ogg',
+      '/sounds/siegetank_ready.ogg'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
     description: "La joya de la artillería Terran. Capaz de patrullar en modo tanque y anclarse al suelo en modo asedio para desatar devastadores cañones de choque de plasma a distancias extremas.",
     lore: "El Crucio reemplazó al antiguo modelo Arclight tras la Guerra de Especies. Con un blindaje de torreta reforzado y una suspensión hidráulica estabilizada, este monstruo puede pulverizar regimientos enteros antes de que puedan divisarlo.",
     stats: {
@@ -100,7 +121,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
       armor: 1,
       speed: 2.25,
       sight: 11,
-      damageGround: 70, // Siege mode
+      damageGround: 70,
       damageAir: 0,
       attacksGround: true,
       attacksAir: false,
@@ -115,14 +136,15 @@ export const SC2_ENTITIES: SC2Entity[] = [
     },
     counters: {
       strongAgainst: ['Marine', 'Hydralisk', 'Stalker', 'Roach'],
-      weakAgainst: ['Mutalisk', 'Immortal', 'Viper', 'Carrier']
+      weakAgainst: ['Mutalisk', 'Immortal', 'Carrier']
     },
     abilities: [
       {
         id: 'siege_mode',
-        name: 'Modo Asedio / Tanque',
+        name: 'Modo Asedio / Crucio',
         hotkey: 'E',
         icon: '🎯',
+        iconImg: '/icons/siege_mode.png',
         description: "Ancla el tanque mecánicamente al terreno, desplegando el cañón de choque de 120 mm con un alcance colosal de 13 casillas y daño de área.",
         cooldown: 4,
         animationTrigger: 'siege',
@@ -130,47 +152,55 @@ export const SC2_ENTITIES: SC2Entity[] = [
         vfx: 'burst'
       },
       {
-        id: 'shock_cannon',
-        name: 'Cañón de Choque Arclight',
-        hotkey: 'F',
-        icon: '💣',
-        description: "Dispara un proyectil masivo de alto explosivo que destruye armaduras pesadas con daño de dispersión radial.",
+        id: 'tank_mode',
+        name: 'Modo Tanque Móvil',
+        hotkey: 'D',
+        icon: '🛡️',
+        iconImg: '/icons/tank_mode.png',
+        description: "Repliega los estabilizadores hidráulicos para recuperar movilidad táctica en el campo de batalla.",
         cooldown: 3,
-        animationTrigger: 'attack',
-        soundType: 'explosion',
-        vfx: 'burst'
+        animationTrigger: 'special',
+        soundType: 'mechanical',
+        vfx: 'sparks'
       }
     ],
     modelConfig: {
-      meshType: 'siege_tank',
-      primaryColor: '#334155',
-      secondaryColor: '#f97316',
-      glowColor: '#38bdf8',
+      meshType: 'tank',
+      glbPath: '/models/tank.glb',
+      texturePath: '/models/siegetank_diffuse.png',
+      primaryColor: '#3b82f6',
+      secondaryColor: '#1e293b',
+      glowColor: '#0284c7',
       scale: 1.25,
-      yOffset: 0.1,
+      yOffset: 0.15,
       hasTurret: true,
-      hasTreads: true,
-      glowIntensity: 1.5
+      hasTreads: true
     }
   },
   {
     id: 'battlecruiser',
-    name: 'Battlecruiser Behemoth',
-    title: 'Crucero de Batalla Insignia',
+    name: 'Crucero de Batalla Behemoth',
+    title: 'Nave Insignia Clase Behemoth / Minotauro',
     race: 'terran',
     category: 'units',
     tier: 3,
-    role: 'Fortaleza Voladora Masiva',
+    role: 'Acorazado Capital Volador',
     attributeTypes: ['Mecánico', 'Blindado', 'Masivo'],
-    quote: "Crucero de batalla operativo.",
+    quote: "¿Quién llamó a la flota?",
     quotes: [
-      "Crucero de batalla operativo.",
-      "Cañón Yamato cargado y calibrado.",
-      "Todos los sistemas a plena potencia.",
-      "¡Abandonar la nave? ¡Jamás!"
+      "¿Quién llamó a la flota?",
+      "Cargando cañón Yamato.",
+      "Sistemas de armamento a plena potencia.",
+      "Coordenadas de salto recibidas."
     ],
-    description: "La nave capital indiscutible de las flotas del Dominio. Equipado con baterías láser automáticas, blindaje de titanio neosteel y el legendario cañón Yamato capaz de vaporizar bases enemigas.",
-    lore: "Construidos en los astilleros orbitales de Korhal y Dylar, los cruceros de batalla son ciudades fortificadas voladoras. Durante la Segunda Gran Guerra, naves como el Hyperion lideraron la rebelión contra el Dominio de Mengsk.",
+    portraitPath: '/portraits/battlecruiser.gif',
+    audioClips: [
+      '/sounds/marine_commander.mp3',
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "La fortaleza celestial del Dominio. Equipado con baterías de láser antiblindaje y el temible Cañón Yamato, capaz de evaporar naves nodrizas o colmenas enteras de un solo disparo nuclear concentrado.",
+    lore: "El crucero de batalla representa la cúspide de la ingeniería aeroespacial terran. Naves legendarias como el Hyperion o el Bucephalus han cambiado el destino de la galaxia capitaneadas por héroes y tiranos por igual.",
     stats: {
       hp: 550,
       armor: 3,
@@ -192,8 +222,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 64
     },
     counters: {
-      strongAgainst: ['Mutalisk', 'Colossus', 'Carrier', 'Hydralisk'],
-      weakAgainst: ['Corruptor', 'Void Ray', 'Tempest', 'Viking']
+      strongAgainst: ['Mutalisk', 'Hydralisk', 'Carrier', 'Thor'],
+      weakAgainst: ['Corruptor', 'Viper', 'Tempest', 'Void Ray']
     },
     abilities: [
       {
@@ -201,29 +231,32 @@ export const SC2_ENTITIES: SC2Entity[] = [
         name: 'Cañón Yamato',
         hotkey: 'Y',
         icon: '⚡',
-        description: "Concentra el núcleo de fusión magnético para disparar un haz de plasma superdenso que causa 300 de daño devastador instantáneo a cualquier objetivo.",
-        energyCost: 100,
+        iconImg: '/icons/yamato_cannon.png',
+        description: "Canaliza un potente campo magnético para disparar un haz de plasma termonuclear de 300 puntos de daño concentrado.",
+        energyCost: 125,
         cooldown: 71,
         animationTrigger: 'yamato',
-        soundType: 'explosion',
+        soundType: 'laser',
         vfx: 'beam'
       },
       {
         id: 'tactical_jump',
-        name: 'Salto Táctico Hiperespacial',
+        name: 'Salto Hiperespacial Táctico',
         hotkey: 'J',
-        icon: '🌌',
-        description: "Abre una fisura hiperespacial momentánea que teletransporta instantáneamente al crucero a cualquier punto del cuadrante.",
-        cooldown: 60,
-        animationTrigger: 'blink',
+        icon: '🌀',
+        iconImg: '/icons/move.png',
+        description: "Teletransporta inmediatamente el crucero a cualquier punto del mapa sin requerir visión directa.",
+        cooldown: 71,
+        animationTrigger: 'special',
         soundType: 'teleport',
         vfx: 'teleport'
       }
     ],
     modelConfig: {
       meshType: 'battlecruiser',
-      primaryColor: '#1e293b',
-      secondaryColor: '#0284c7',
+      glbPath: '/models/battlecruiser.glb',
+      primaryColor: '#1d4ed8',
+      secondaryColor: '#334155',
       glowColor: '#38bdf8',
       scale: 1.45,
       yOffset: 0.8,
@@ -232,29 +265,245 @@ export const SC2_ENTITIES: SC2Entity[] = [
     }
   },
   {
+    id: 'scv',
+    name: 'VCE (SCV T-280)',
+    title: 'Vehículo de Construcción Espacial',
+    race: 'terran',
+    category: 'units',
+    tier: 1,
+    role: 'Recolección / Reparación / Construcción',
+    attributeTypes: ['Mecánico', 'Biológico', 'Ligero'],
+    quote: "VCE listo para la acción.",
+    quotes: [
+      "VCE listo para la acción.",
+      "¡A la orden, capitán!",
+      "¿Trabajo terminado?",
+      "No puedo construir sobre eso."
+    ],
+    portraitPath: '/portraits/scv.png',
+    audioClips: [
+      '/sounds/scv_goodtogo.mp3',
+      '/sounds/scv_reportin.mp3',
+      '/sounds/scv_order.mp3'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "Unidad obrera multiuso. Equipado con taladros de fusión magnética y tenazas hidráulicas para minar minerales, extraer vespeno y reparar maquinaria bajo fuego enemigo.",
+    lore: "El caballo de batalla silencioso que forjó la civilización Terran entre las estrellas. Los pilotos de los VCE arriesgan sus vidas en la primera línea de combate levantando búnkeres y bases de operaciones en mundos hostiles.",
+    stats: {
+      hp: 45,
+      armor: 0,
+      speed: 2.81,
+      sight: 8,
+      damageGround: 5,
+      damageAir: 0,
+      attacksGround: true,
+      attacksAir: false,
+      range: 0.1,
+      attackSpeed: 1.07
+    },
+    cost: {
+      minerals: 50,
+      vespene: 0,
+      supply: 1,
+      time: 12
+    },
+    counters: {
+      strongAgainst: ['Drone', 'Probe'],
+      weakAgainst: ['Zergling', 'Reaper', 'Zealot']
+    },
+    abilities: [
+      {
+        id: 'repair',
+        name: 'Reparación de Fusión',
+        hotkey: 'R',
+        icon: '🔧',
+        iconImg: '/icons/defensive_matrix.png',
+        description: "Repara estructuras mecánicas y vehículos dañados a cambio de una pequeña cantidad de minerales.",
+        animationTrigger: 'special',
+        soundType: 'mechanical',
+        vfx: 'sparks'
+      }
+    ],
+    modelConfig: {
+      meshType: 'scv',
+      glbPath: '/models/scv.glb',
+      texturePath: '/models/scv_diffuse.png',
+      primaryColor: '#eab308',
+      secondaryColor: '#334155',
+      glowColor: '#38bdf8',
+      scale: 1.15,
+      yOffset: 0.1
+    }
+  },
+  {
+    id: 'goliath',
+    name: 'Goliat Mark IV',
+    title: 'Bípode Blindado Antiaéreo / Asalto Terrestre',
+    race: 'terran',
+    category: 'units',
+    tier: 2,
+    role: 'Antiaéreo Pesado / Apoyo Mecanizado',
+    attributeTypes: ['Mecánico', 'Blindado'],
+    quote: "Sistemas Goliat en línea.",
+    quotes: [
+      "Sistemas Goliat en línea.",
+      "Misiles Hellfire bloqueados.",
+      "Reconocimiento confirmado.",
+      "¡Objetivo aéreo en la mira!"
+    ],
+    portraitPath: '/portraits/goliath.png',
+    audioClips: [
+      '/sounds/siegetank_what00.ogg',
+      '/sounds/siegetank_what01.ogg'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "Caminante bípode acorazado con dos cañones automáticos de 30 mm para objetivos terrestres y una batería dorsal de misiles Hellfire guiados de largo alcance contra cazas y bestias voladoras.",
+    lore: "Desarrollado por Kel-Morian Combine y adoptado con entusiasmo por el Dominio, el Goliat es un símbolo de poderío industrial mecanizado capaz de derribar flotas aéreas zerg o protoss a gran distancia.",
+    stats: {
+      hp: 125,
+      armor: 1,
+      speed: 2.62,
+      sight: 10,
+      damageGround: 12,
+      damageAir: 16,
+      attacksGround: true,
+      attacksAir: true,
+      range: 8,
+      attackSpeed: 1.18
+    },
+    cost: {
+      minerals: 150,
+      vespene: 50,
+      supply: 2,
+      time: 28
+    },
+    counters: {
+      strongAgainst: ['Mutalisk', 'Wraith', 'Carrier', 'Phoenix'],
+      weakAgainst: ['Immortal', 'Ultralisk', 'Siege Tank Crucio']
+    },
+    abilities: [
+      {
+        id: 'hellfire_salvo',
+        name: 'Salva Hellfire',
+        hotkey: 'F',
+        icon: '🚀',
+        iconImg: '/icons/attack.png',
+        description: "Lanza una descarga concentrada de misiles guiados que penetran el blindaje aéreo enemigo.",
+        animationTrigger: 'attack',
+        soundType: 'explosion',
+        vfx: 'burst'
+      }
+    ],
+    modelConfig: {
+      meshType: 'goliath',
+      glbPath: '/models/goliath.glb',
+      primaryColor: '#2563eb',
+      secondaryColor: '#1e293b',
+      glowColor: '#38bdf8',
+      scale: 1.3,
+      yOffset: 0.2
+    }
+  },
+  {
+    id: 'wraith',
+    name: 'Espectro CF/A-17 (Wraith)',
+    title: 'Caza Espacial de Superioridad Aérea',
+    race: 'terran',
+    category: 'units',
+    tier: 2,
+    role: 'Incursión Sigilosa / Interceptación Aérea',
+    attributeTypes: ['Mecánico', 'Ligero'],
+    quote: "Vector listo.",
+    quotes: [
+      "Vector listo.",
+      "Camuflaje activo, no saben qué los golpeó.",
+      "Rumbo fijado.",
+      "¡Fuego de láseres Gemini!"
+    ],
+    portraitPath: '/portraits/wraith.png',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "Caza interceptor atmosférico y orbital dotado de generadores de camuflaje de distorsión lumínica y láseres Gemini.",
+    lore: "Los pilotos de Wraith son ases del combate aéreo entrenados para penetrar las defensas enemigas en modo sigiloso y aniquilar objetivos estratégicos antes de que se activen las alarmas.",
+    stats: {
+      hp: 120,
+      armor: 0,
+      energy: 200,
+      maxEnergy: 200,
+      speed: 3.84,
+      sight: 9,
+      damageGround: 8,
+      damageAir: 20,
+      attacksGround: true,
+      attacksAir: true,
+      range: 5,
+      attackSpeed: 0.86
+    },
+    cost: {
+      minerals: 150,
+      vespene: 100,
+      supply: 2,
+      time: 35
+    },
+    counters: {
+      strongAgainst: ['Mutalisk', 'Dropship', 'Observer', 'Overlord'],
+      weakAgainst: ['Valkyrie', 'Scourge', 'Corsair', 'Stalker']
+    },
+    abilities: [
+      {
+        id: 'cloak',
+        name: 'Camuflaje Óptico',
+        hotkey: 'C',
+        icon: '👻',
+        iconImg: '/icons/cloak.png',
+        description: "Activa el generador de sigilo haciendo invisible la nave a menos que esté en el rango de un detector.",
+        energyCost: 25,
+        animationTrigger: 'special',
+        soundType: 'mechanical',
+        vfx: 'cloud'
+      }
+    ],
+    modelConfig: {
+      meshType: 'wraith',
+      glbPath: '/models/wraith.glb',
+      primaryColor: '#1d4ed8',
+      secondaryColor: '#0f172a',
+      glowColor: '#38bdf8',
+      scale: 1.35,
+      yOffset: 0.6
+    }
+  },
+  {
     id: 'ghost',
-    name: 'Ghost',
-    title: 'Agente Psiónico de Operaciones Negras',
+    name: 'Fantasma Terran (Ghost)',
+    title: 'Operativo Psiónico Encubierto',
     race: 'terran',
     category: 'units',
     tier: 3,
-    role: 'Francotirador / Asesinato Psiónico',
+    role: 'Francotirador / Guerra Psiónica / Designación Nuclear',
     attributeTypes: ['Biológico', 'Psiónico'],
-    quote: "Llegó el fantasma.",
+    quote: "¿Alguien me llamó?",
     quotes: [
-      "Llegó el fantasma.",
+      "¿Alguien me llamó?",
       "Nunca me verán venir.",
-      "Lanzamiento nuclear detectado.",
-      "Objetivo eliminado limpiamente."
+      "Bomba nuclear lista.",
+      "Silencio en la frecuencia."
     ],
-    description: "Asesinos criados bajo condicionamiento neural del Dominio. Portan trajes de camuflaje hostil que los hacen invisibles a simple vista y rifles de francotirador C-10 con munición penetrante.",
-    lore: "Los Fantasmas poseen un potencial psiónico de índice PI de 5 o superior. Fueron la fuerza clandestina más temida del Emperador Mengsk y produjeron leyendas como Nova Terra y la propia Sarah Kerrigan antes de su infestación.",
+    portraitPath: '/portraits/ghost.png',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "Asesinos criados bajo implantes neuronales que canalizan poderes psiónicos mortales. Portan rifles de francotirador C-10 Canister y guiado láser para bombardeos nucleares tácticos.",
+    lore: "El programa Ghost del Dominio toma individuos sensibles a la energía psiónica desde la infancia, borra sus recuerdos y los convierte en el instrumento supremo de asesinatos políticos y reconocimiento táctico.",
     stats: {
       hp: 100,
       armor: 0,
       energy: 200,
       maxEnergy: 200,
-      speed: 2.25,
+      speed: 2.81,
       sight: 11,
       damageGround: 10,
       damageAir: 10,
@@ -270,221 +519,151 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 29
     },
     counters: {
-      strongAgainst: ['High Templar', 'Infestor', 'Zealot', 'Ultralisk'],
-      weakAgainst: ['Stalker', 'Roach', 'Siege Tank']
+      strongAgainst: ['High Templar', 'Infestor', 'Raven', 'Zergling'],
+      weakAgainst: ['Siege Tank Crucio', 'Stalker', 'Ultralisk']
     },
     abilities: [
       {
         id: 'nuke',
-        name: 'Ataque Nuclear Táctico',
+        name: 'Golpe Nuclear Táctico',
         hotkey: 'N',
         icon: '☢️',
-        description: "Guía un misil termonuclear de 20 megatones desde el silo orbital hacia las coordenadas del objetivo. Provoca 300 (+200 a estructuras) de daño catastrófico.",
+        iconImg: '/icons/nuke_strike.png',
+        description: "Guía un misil nuclear balístico de 300 (+200 a estructuras) de daño catastrófico en un área masiva tras 14 segundos de canalización láser.",
         cooldown: 20,
         animationTrigger: 'special',
-        soundType: 'siren',
+        soundType: 'explosion',
         vfx: 'burst'
       },
       {
         id: 'emp',
-        name: 'Ronda de Pulso Electromagnético (EMP)',
+        name: 'Disparo EMP',
         hotkey: 'E',
         icon: '⚡',
-        description: "Dispara un proyectil que drena 100 de energía y 100 de escudos a todas las unidades en el área de impacto, además de desvelar unidades invisibles.",
+        iconImg: '/icons/emp_shockwave.png',
+        description: "Dispara un pulso electromagnético que drena hasta 100 puntos de energía y destruye escudos de plasma Protoss al instante.",
         energyCost: 75,
-        animationTrigger: 'attack',
+        animationTrigger: 'special',
         soundType: 'lightning',
         vfx: 'lightning'
       }
     ],
     modelConfig: {
       meshType: 'ghost',
-      primaryColor: '#0f172a',
-      secondaryColor: '#38bdf8',
-      glowColor: '#ef4444', // Red sniper laser sight
-      scale: 1.0,
-      yOffset: 0,
-      glowIntensity: 1.5
+      glbPath: '/models/marine.glb',
+      primaryColor: '#1e293b',
+      secondaryColor: '#dc2626',
+      glowColor: '#ef4444',
+      scale: 1.05,
+      yOffset: -0.1
     }
   },
 
   // ==========================================
-  // TERRAN - HEROES
+  // TERRAN - HEROES & BUILDINGS
   // ==========================================
   {
     id: 'jim_raynor',
     name: 'Jim Raynor',
-    title: 'Comandante de los Incursores de Raynor',
+    title: 'Comandante de los Raiders de Raynor',
     race: 'terran',
     category: 'heroes',
     tier: 4,
-    role: 'Líder Revolucionario / Tirador Experto',
-    attributeTypes: ['Biológico', 'Héroe', 'Ligero'],
-    quote: "Este hombrecito acaba de empezar a pelear.",
+    role: 'Héroe Legendario / Comandante de la Rebelión',
+    attributeTypes: ['Biológico', 'Blindado', 'Héroe'],
+    quote: "Este no es el final. Esto apenas comienza.",
     quotes: [
-      "Este hombrecito acaba de empezar a pelear.",
-      "¡Por el Hyperion!",
-      "No dejamos a nadie atrás.",
-      "Algún día Mengsk pagará por cada una de sus mentiras."
+      "Este no es el final. Esto apenas comienza.",
+      "Todo hombre tiene su precio... el mío es la libertad.",
+      "¡Fuego de cobertura, muchachos!",
+      "Por Sarah... y por todos los que cayeron."
     ],
-    description: "Ex-mariscal de Mar Sara y líder indiscutible de la resistencia rebelde. Lucha en primera línea portando su servoarmadura personalizada y un rifle Gauss modificado con mira de penetración.",
-    lore: "Traicionado por Arcturus Mengsk y marcado por la pérdida de Sarah Kerrigan en Nueva Gettysburg, Jim Raynor se convirtió en el faro de esperanza para la humanidad frente a la tiranía del Dominio y el avance del Enjambre Zerg.",
+    portraitPath: '/portraits/raynor.jpg',
+    audioClips: [
+      '/sounds/marine_commander.mp3',
+      '/sounds/marine_shoot.mp3',
+      '/sounds/marine_pieceme.mp3'
+    ],
+    backgroundScene: '/backgrounds/marsara_desert.jpg',
+    description: "Antiguo alguacil de Mar Sara y líder legendario de la rebelión armada contra Mengsk y el Enjambre. Lucha con su rifle Gauss experimental y su legendaria determinación.",
+    lore: "Raynor ha sido testigo del apogeo y la caída de imperios estelares. De un modesto oficial de policía colonial a convertirse en la esperanza suprema del Sector Koprulu, su valentía inspiró a millones a levantarse.",
     stats: {
-      hp: 350,
+      hp: 450,
       armor: 3,
-      speed: 2.75,
-      sight: 11,
+      energy: 150,
+      maxEnergy: 150,
+      speed: 3.15,
+      sight: 12,
       damageGround: 35,
       damageAir: 35,
       attacksGround: true,
       attacksAir: true,
       range: 7,
-      attackSpeed: 0.65
+      attackSpeed: 0.55
     },
     cost: {
-      minerals: 300,
-      vespene: 100,
+      minerals: 500,
+      vespene: 250,
       supply: 4,
-      time: 50
+      time: 60
     },
     counters: {
-      strongAgainst: ['Hydralisk', 'Zealot', 'Roach'],
-      weakAgainst: ['Ultralisk', 'Immortal', 'Colossus']
+      strongAgainst: ['Zeratul', 'Hydralisk', 'Zealot', 'Thor'],
+      weakAgainst: ['Kerrigan Reina de Espadas', 'Colossus', 'Archon']
     },
     abilities: [
       {
         id: 'hyperion_strike',
-        name: 'Ataque Orbital Hyperion',
+        name: 'Bombardeo Orbital del Hyperion',
         hotkey: 'H',
         icon: '🚀',
-        description: "Ordena al crucero de batalla Hyperion que descargue una andanada de cazas de combate y misiles balísticos guiados sobre el sector.",
+        iconImg: '/icons/yamato_cannon.png',
+        description: "Ordena a la nave capitana Hyperion bombardear la zona con salvas de cañones Yamato de precisión devastadora.",
         cooldown: 45,
         animationTrigger: 'special',
         soundType: 'explosion',
         vfx: 'beam'
-      },
-      {
-        id: 'inspire',
-        name: 'Inspiración de Combate',
-        hotkey: 'I',
-        icon: '🛡️',
-        description: "Aumenta la cadencia de fuego y la velocidad de movimiento de todas las tropas aliadas cercanas un 30% durante 15 segundos.",
-        cooldown: 25,
-        animationTrigger: 'stim',
-        soundType: 'stim',
-        vfx: 'sparks'
       }
     ],
     modelConfig: {
       meshType: 'raynor',
-      primaryColor: '#1e3a8a',
-      secondaryColor: '#d97706',
-      glowColor: '#60a5fa',
-      scale: 1.15,
-      yOffset: 0,
-      glowIntensity: 1.8
-    }
-  },
-  {
-    id: 'tychus',
-    name: 'Tychus Findlay',
-    title: 'Convencido y Armado hasta los Dientes',
-    race: 'terran',
-    category: 'heroes',
-    tier: 4,
-    role: 'Furia Acribilladora Pesada',
-    attributeTypes: ['Biológico', 'Héroe', 'Blindado'],
-    quote: "Ya era maldita hora.",
-    quotes: [
-      "Ya era maldita hora.",
-      "Si sangra, podemos convertirlo en carne picada.",
-      "¡Abre paso a la vieja confiable!",
-      "Trato hecho, Jimmy."
-    ],
-    description: "Mercenario convicto atrapado en una servoarmadura presurizada de la que no puede salir. Porta una minigun rotativa de varios cañones capaz de picar metal y carne en segundos.",
-    lore: "Viejo camarada de Raynor en los Diablos del Cielo. Condenado a criogenia perpetua, Mengsk le ofreció su libertad a cambio de una misión secreta: matar a la Reina de Espadas en el planeta Char.",
-    stats: {
-      hp: 500,
-      armor: 2,
-      speed: 2.25,
-      sight: 10,
-      damageGround: 40,
-      damageAir: 25,
-      attacksGround: true,
-      attacksAir: true,
-      range: 6,
-      attackSpeed: 0.35
-    },
-    cost: {
-      minerals: 350,
-      vespene: 150,
-      supply: 4,
-      time: 55
-    },
-    counters: {
-      strongAgainst: ['Zergling', 'Zealot', 'Roach'],
-      weakAgainst: ['Siege Tank', 'High Templar', 'Lurker']
-    },
-    abilities: [
-      {
-        id: 'grenade',
-        name: 'Granada de Fragmentación Trituradora',
-        hotkey: 'G',
-        icon: '💣',
-        description: "Lanza una granada masiva que repele enemigos y causa 150 de daño explosivo en el radio de impacto.",
-        cooldown: 12,
-        animationTrigger: 'attack',
-        soundType: 'explosion',
-        vfx: 'burst'
-      },
-      {
-        id: 'odin_call',
-        name: 'Despliegue del Mecha Odín',
-        hotkey: 'O',
-        icon: '🤖',
-        description: "Llama desde la órbita al mecha prototipo Odín, aumentando su blindaje y dotándolo de cañones nucleares dobles.",
-        cooldown: 80,
-        animationTrigger: 'special',
-        soundType: 'mechanical',
-        vfx: 'sparks'
-      }
-    ],
-    modelConfig: {
-      meshType: 'tychus',
-      primaryColor: '#0f766e',
-      secondaryColor: '#b45309',
-      glowColor: '#2dd4bf',
+      glbPath: '/models/marine.glb',
+      primaryColor: '#0f172a',
+      secondaryColor: '#dc2626',
+      glowColor: '#f97316',
       scale: 1.25,
-      yOffset: 0,
-      glowIntensity: 1.6
+      yOffset: -0.1
     }
   },
-
-  // ==========================================
-  // TERRAN - BUILDINGS
-  // ==========================================
   {
     id: 'command_center',
-    name: 'Command Center',
-    title: 'Centro de Mando Móvil',
+    name: 'Centro de Mando Orbital',
+    title: 'Estructura Central de Operaciones y Minería',
     race: 'terran',
     category: 'buildings',
     tier: 1,
-    role: 'Extracción de Recursos / Base Operativa',
-    attributeTypes: ['Estructura', 'Blindado', 'Mecánico'],
-    quote: "Centro de mando listo para recibir órdenes.",
+    role: 'Cuartel General / Estación Orbital',
+    attributeTypes: ['Mecánico', 'Blindado', 'Estructura'],
+    quote: "Centro de Mando listo para aterrizaje.",
     quotes: [
-      "Centro de mando listo para recibir órdenes.",
-      "Motores de despegue encendidos.",
-      "Descarga de minerales procesada.",
-      "Base en peligro, solicitando refuerzos."
+      "Centro de Mando listo para aterrizaje.",
+      "Escaneo orbital disponible.",
+      "Despegue atmosférico completado.",
+      "Procesando suministros de minerales."
     ],
-    description: "El epicentro de cualquier colonia o expedición minera Terran. Entrena VCEs, procesa minerales y gas vespeno, y posee potentes propulsores térmicos que le permiten despegar y reubicarse en nuevos yacimientos.",
-    lore: "Fabricados con aleaciones estándar de las corporaciones confederadas, estos cuarteles generales modulares pueden ser actualizados a Fortaleza Planetaria o Mando Orbital.",
+    portraitPath: '/portraits/command_center.png',
+    audioClips: [
+      '/sounds/siegetank_what00.ogg'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "El corazón de cada base Terran. Puede despegar del suelo con sus turbinas para reubicarse y mejorarse a Fortaleza Planetaria o Comando Orbital.",
+    lore: "Equipado con propulsores vectoriales de despegue vertical, el Centro de Mando permite a las fuerzas del Dominio establecer enclaves operacionales en cualquier planeta en cuestión de minutos.",
     stats: {
       hp: 1500,
       armor: 1,
-      speed: 0.94, // when flying
+      energy: 200,
+      maxEnergy: 200,
+      speed: 1.31,
       sight: 11,
       attacksGround: false,
       attacksAir: false
@@ -497,67 +676,191 @@ export const SC2_ENTITIES: SC2Entity[] = [
     },
     counters: {
       strongAgainst: [],
-      weakAgainst: ['Mutalisk', 'Siege Tank', 'Void Ray']
+      weakAgainst: ['Mutalisk', 'Siege Tank Crucio', 'Carrier']
     },
     abilities: [
       {
-        id: 'lift_off',
-        name: 'Despegue / Aterrizaje Atmosférico',
-        hotkey: 'L',
-        icon: '🛫',
-        description: "Enciende los retropropulsores ventrales para elevar el edificio por los cielos, evitando ataques terrestres y permitiendo reubicación sobre riscos o expansiones.",
-        cooldown: 5,
-        animationTrigger: 'transform',
-        soundType: 'engine',
-        vfx: 'sparks'
-      },
-      {
-        id: 'calldown_mule',
-        name: 'Lanzamiento de MULA Minera',
-        hotkey: 'E',
-        icon: '🤖',
-        description: "Envía una cápsula con un robot MULA automatizado desde la órbita que extrae minerales a velocidad cuádruple durante 64 segundos.",
+        id: 'scanner_sweep',
+        name: 'Escaneo Orbital de Satélite',
+        hotkey: 'C',
+        icon: '📡',
+        iconImg: '/icons/scanner_sweep.png',
+        description: "Revela cualquier área del mapa durante 12 segundos, detectando unidades invisibles o enterradas.",
         energyCost: 50,
         animationTrigger: 'special',
         soundType: 'mechanical',
-        vfx: 'burst'
+        vfx: 'cloud'
       }
     ],
     modelConfig: {
       meshType: 'command_center',
-      primaryColor: '#334155',
-      secondaryColor: '#f59e0b',
+      glbPath: '/models/command_center.glb',
+      primaryColor: '#1e40af',
+      secondaryColor: '#334155',
       glowColor: '#38bdf8',
-      scale: 1.5,
-      yOffset: 0.4,
-      glowIntensity: 1.4
+      scale: 1.6,
+      yOffset: 0.2
+    }
+  },
+  {
+    id: 'supply_depot',
+    name: 'Depósito de Suministros',
+    title: 'Estructura Logística Retráctil',
+    race: 'terran',
+    category: 'buildings',
+    tier: 1,
+    role: 'Logística / Control de Acceso Táctico',
+    attributeTypes: ['Mecánico', 'Blindado', 'Estructura'],
+    quote: "Suministros asegurados.",
+    quotes: [
+      "Suministros asegurados.",
+      "Plataforma descendida.",
+      "Puerta sellada."
+    ],
+    portraitPath: '/portraits/supply_depot.png',
+    audioClips: [
+      '/sounds/siegetank_what01.ogg'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "Proporciona combustible, munición y soporte de vida para 8 unidades de suministro. Puede sumergirse bajo tierra para permitir el paso de tropas amigas.",
+    lore: "El diseño retráctil del depósito resolvió el antiguo dilema de cuellos de botella en bases amuralladas, convirtiéndose en el estándar militar en todo el Dominio.",
+    stats: {
+      hp: 400,
+      armor: 1,
+      speed: 0,
+      sight: 9,
+      attacksGround: false,
+      attacksAir: false
+    },
+    cost: {
+      minerals: 100,
+      vespene: 0,
+      supply: 0,
+      time: 21
+    },
+    counters: {
+      strongAgainst: [],
+      weakAgainst: ['Baneling', 'Siege Tank Crucio', 'Roach']
+    },
+    abilities: [
+      {
+        id: 'lower_depot',
+        name: 'Sumergir / Emerger Depósito',
+        hotkey: 'R',
+        icon: '⬇️',
+        iconImg: '/icons/tank_mode.png',
+        description: "Baja la estructura a ras de suelo para permitir el paso de unidades terrestres aliadas.",
+        animationTrigger: 'special',
+        soundType: 'mechanical',
+        vfx: 'sparks'
+      }
+    ],
+    modelConfig: {
+      meshType: 'supply_depot',
+      glbPath: '/models/supply-depot.glb',
+      primaryColor: '#3b82f6',
+      secondaryColor: '#1e293b',
+      glowColor: '#38bdf8',
+      scale: 1.25,
+      yOffset: 0.1
+    }
+  },
+  {
+    id: 'terran_turret',
+    name: 'Torreta de Misiles Terran',
+    title: 'Defensa Estática Antiaérea / Radar Detector',
+    race: 'terran',
+    category: 'buildings',
+    tier: 1,
+    role: 'Defensa Antiaérea / Detección de Sigilo',
+    attributeTypes: ['Mecánico', 'Blindado', 'Estructura'],
+    quote: "Radar de largo alcance operativo.",
+    quotes: [
+      "Radar de largo alcance operativo.",
+      "Blanco aéreo detectado.",
+      "Batería de misiles cargada."
+    ],
+    portraitPath: '/portraits/missile_turret.png',
+    audioClips: [
+      '/sounds/siegetank_what02.ogg'
+    ],
+    backgroundScene: '/backgrounds/hyperion_armory.jpg',
+    description: "Torreta automatizada equipada con radares de detección de sigilo y lanzadores de misiles Hellfire antiaéreos gemelos.",
+    lore: "Esencial para salvaguardar enclaves mineros y fábricas de ataques sorpresa de Mutalisks zerg o naves de desembarco Protoss.",
+    stats: {
+      hp: 250,
+      armor: 1,
+      speed: 0,
+      sight: 11,
+      damageAir: 24,
+      attacksGround: false,
+      attacksAir: true,
+      range: 7,
+      attackSpeed: 0.86
+    },
+    cost: {
+      minerals: 100,
+      vespene: 0,
+      supply: 0,
+      time: 25
+    },
+    counters: {
+      strongAgainst: ['Mutalisk', 'Wraith', 'Banshee', 'Observer'],
+      weakAgainst: ['Siege Tank Crucio', 'Roach', 'Stalker']
+    },
+    abilities: [
+      {
+        id: 'anti_air_barrage',
+        name: 'Fuego Antiaéreo Continuo',
+        hotkey: 'A',
+        icon: '🚀',
+        iconImg: '/icons/attack.png',
+        description: "Dispara salvas continuas de misiles rastreadores contra amenazas aéreas.",
+        animationTrigger: 'attack',
+        soundType: 'explosion',
+        vfx: 'burst'
+      }
+    ],
+    modelConfig: {
+      meshType: 'terran-turret',
+      glbPath: '/models/terran-turret.glb',
+      primaryColor: '#2563eb',
+      secondaryColor: '#1e293b',
+      glowColor: '#38bdf8',
+      scale: 1.2,
+      yOffset: 0.1
     }
   },
 
   // ==========================================
-  // ZERG - UNITS
+  // ZERG - UNITS & HEROES
   // ==========================================
   {
     id: 'zergling',
     name: 'Zergling',
-    title: 'Engendro Depredador del Enjambre',
+    title: 'Bestia de Asalto Veloz del Enjambre',
     race: 'zerg',
     category: 'units',
     tier: 1,
-    role: 'Enjambre Masivo / Hostigamiento',
+    role: 'Enjambre / Flanqueo / Destrucción Rápida',
     attributeTypes: ['Biológico', 'Ligero'],
-    quote: "*Gruñidos feroces y chasquidos de mandíbulas quitinosas*",
+    quote: "*Gruñidos feroces y chasquido de garras*",
     quotes: [
-      "*Chasquidos de garras sobre el metal*",
-      "*Siseo visceral de adrenalina*",
-      "*Chillido del Enjambre hambriento*"
+      "*Gruñidos feroces y chasquido de garras*",
+      "*Siseo venenoso del Enjambre*",
+      "*Golpeteo veloz de pezuñas queratinizadas*"
     ],
-    description: "La forma de vida más rápida y numerosa del Enjambre. Nacen de dos en dos desde una sola larva. Armados con garras afiladas con hojas de diamante capaces de despedazar el blindaje de aleación.",
-    lore: "Asimilados de los dóciles carnívoros 'Dune-Runners' de Zz'gash, el ADN del zergling fue hipermutado por el Supercerebro para convertirlos en la fuerza de asalto de choque definitiva del cosmos.",
+    portraitPath: '/portraits/zergling.jpg',
+    audioClips: [
+      '/sounds/zergling_attack.wav'
+    ],
+    backgroundScene: '/backgrounds/char_volcano.jpg',
+    description: "Nacidos de dos en dos por cada huevo de larva. Bestias hiperrápidas dotadas de garras afiladas con diamantes capaces de destrozar blindaje en segundos.",
+    lore: "Criados originalmente a partir de los dóciles carnívoros Zz'gashi del desierto, el Enjambre absorbió y alteró genéticamente su estructura hasta convertirlos en los más implacables y numerosos cazadores del cosmos.",
     stats: {
       hp: 35,
       armor: 0,
-      speed: 4.13, // Fast creep
+      speed: 4.13,
       sight: 8,
       damageGround: 5,
       damageAir: 0,
@@ -569,32 +872,34 @@ export const SC2_ENTITIES: SC2Entity[] = [
     cost: {
       minerals: 50,
       vespene: 0,
-      supply: 0.5,
+      supply: 1,
       time: 17
     },
     counters: {
-      strongAgainst: ['Stalker', 'Marauder', 'Siege Tank (sin modo)'],
-      weakAgainst: ['Colossus', 'Baneling', 'Hellion', 'Zealot']
+      strongAgainst: ['Stalker', 'Marauder', 'Hydralisk'],
+      weakAgainst: ['Colossus', 'Hellion', 'Baneling']
     },
     abilities: [
       {
         id: 'adrenal_frenzy',
-        name: 'Glándulas Suprarrenales Hiperactivas',
+        name: 'Frenesí Suprarrenal',
         hotkey: 'Z',
-        icon: '⚡',
-        description: "Sobrecarga el sistema hormonal del zergling, acelerando su velocidad de desgarro con las garras un 43%.",
+        icon: '🩸',
+        iconImg: '/icons/attack.png',
+        description: "Glándulas modificadas aceleran el ritmo cardíaco aumentando la velocidad de ataque un 40%.",
         cooldown: 8,
-        animationTrigger: 'attack',
+        animationTrigger: 'special',
         soundType: 'bio',
-        vfx: 'burst'
+        vfx: 'sparks'
       },
       {
         id: 'burrow',
-        name: 'Enterrarse (Burrow)',
+        name: 'Enterrarse en el Suelo',
         hotkey: 'R',
         icon: '🕳️',
-        description: "Se entierra bajo la superficie del suelo, volviéndose invisible y regenerando salud rápidamente hasta desenterrarse para una emboscada.",
-        cooldown: 2,
+        iconImg: '/icons/hold.png',
+        description: "Se sumerge bajo tierra para emboscadas ocultas y regeneración acelerada de tejido.",
+        cooldown: 3,
         animationTrigger: 'burrow',
         soundType: 'bio',
         vfx: 'cloud'
@@ -602,35 +907,41 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'zergling',
-      primaryColor: '#7e22ce',
-      secondaryColor: '#831843',
-      glowColor: '#a855f7',
-      scale: 0.85,
-      yOffset: -0.1,
-      glowIntensity: 1.2
+      glbPath: '/models/zergling.glb',
+      texturePath: '/models/zergling_diffuse.png',
+      primaryColor: '#7c3aed',
+      secondaryColor: '#4c1d95',
+      glowColor: '#c084fc',
+      scale: 1.1,
+      yOffset: 0.05
     }
   },
   {
     id: 'hydralisk',
     name: 'Hydralisk',
-    title: 'Guerrero Espinoso del Enjambre',
+    title: 'Guerrero de Espinas Perforantes',
     race: 'zerg',
     category: 'units',
     tier: 2,
-    role: 'Tirador de Largo Alcance Antiaéreo/Terrestre',
+    role: 'Fuego Antiaéreo y Terrestre de Rango',
     attributeTypes: ['Biológico', 'Ligero'],
-    quote: "*Siseo venenoso y percusión de placas dérmicas*",
+    quote: "*Siseo gutural y chasquido de placas*",
     quotes: [
-      "*Siseo gutural profundo*",
-      "*Chasquido de espinas dorsales*",
-      "*Rugido territorial amenazante*"
+      "*Siseo gutural y chasquido de placas*",
+      "*Tensión muscular de placas disparadoras*",
+      "*Rugido del Enjambre hambriento*"
     ],
-    description: "Un imponente organismo ofidio cubierto de placas de quitina acorazada. Dispara miles de espinas densas y afiladas por presión muscular que atraviesan blindajes de tanques y alas de cazas aéreos.",
-    lore: "Originalmente pacíficos herbívoros llamados Slothiens. Tras ser mutados genéticamente por el Enjambre, se convirtieron en uno de los cazadores más letales y versátiles de toda la galaxia.",
+    portraitPath: '/portraits/hydralisk.gif',
+    audioClips: [
+      '/sounds/hydralisk_attack.wav'
+    ],
+    backgroundScene: '/backgrounds/char_volcano.jpg',
+    description: "La columna ofensiva a distancia del Enjambre. Dispara espinas densas y ranuradas impulsadas por contracciones musculares que atraviesan aleaciones de titanio.",
+    lore: "Evolucionados a partir de los pacíficos herbívoros Slothien, los hydralisks fueron metamorfoseados en terroríficas serpientes de combate bípedas con una musculatura superior implacable.",
     stats: {
       hp: 90,
       armor: 0,
-      speed: 2.81,
+      speed: 3.15,
       sight: 9,
       damageGround: 12,
       damageAir: 12,
@@ -646,65 +957,129 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 24
     },
     counters: {
-      strongAgainst: ['Mutalisk', 'Void Ray', 'Banshee', 'Immortal'],
-      weakAgainst: ['Siege Tank', 'Colossus', 'Storm', 'Baneling']
+      strongAgainst: ['Mutalisk', 'Void Ray', 'Valkyrie', 'Immortal'],
+      weakAgainst: ['Siege Tank Crucio', 'Colossus', 'Storm Psiónica']
     },
     abilities: [
       {
         id: 'grooved_spines',
-        name: 'Andanada de Espinas Acanaladas',
-        hotkey: 'A',
+        name: 'Espinas Ranuradas',
+        hotkey: 'G',
         icon: '🏹',
-        description: "Contrae los sacos musculares de la espalda para disparar una salva de proyectiles de queratina de alta penetración.",
+        iconImg: '/icons/attack.png',
+        description: "Espinas modificadas genéticamente que incrementan el alcance de ataque de 5 a 6 casillas.",
         animationTrigger: 'attack',
         soundType: 'bio',
-        vfx: 'sparks'
-      },
-      {
-        id: 'morph_lurker',
-        name: 'Mutar en Acechador (Lurker)',
-        hotkey: 'L',
-        icon: '🦂',
-        description: "El Hydralisk se envuelve en una crisálida biológica para emerger como un temible Acechador con espinas subterráneas.",
-        cooldown: 25,
-        animationTrigger: 'transform',
-        soundType: 'bio',
-        vfx: 'cloud'
+        vfx: 'beam'
       }
     ],
     modelConfig: {
       meshType: 'hydralisk',
-      primaryColor: '#6b21a8',
-      secondaryColor: '#f59e0b',
-      glowColor: '#e11d48',
-      scale: 1.15,
-      yOffset: 0.1,
-      glowIntensity: 1.5
+      glbPath: '/models/hydralisk.glb',
+      primaryColor: '#9333ea',
+      secondaryColor: '#3b0764',
+      glowColor: '#a855f7',
+      scale: 1.2,
+      yOffset: 0.1
+    }
+  },
+  {
+    id: 'mutalisk',
+    name: 'Mutalisk',
+    title: 'Volador Orgánico de Ataque Rápido',
+    race: 'zerg',
+    category: 'units',
+    tier: 2,
+    role: 'Hostigamiento Aéreo / Golpe y Fuga',
+    attributeTypes: ['Biológico', 'Ligero'],
+    quote: "*Chillido supersónico de alas orgánicas*",
+    quotes: [
+      "*Chillido supersónico de alas orgánicas*",
+      "*Eco resonante de gusanos glaive*",
+      "*Aleteo hipersónico del enjambre volador*"
+    ],
+    portraitPath: '/portraits/hydralisk.gif',
+    audioClips: [
+      '/sounds/mutalisk_attack.wav'
+    ],
+    backgroundScene: '/backgrounds/char_volcano.jpg',
+    description: "Caza biológico capaz de maniobrar en el vacío espacial y atmósferas densas. Dispara gusanos Glaive voraces que rebotan entre múltiples enemigos.",
+    lore: "Originarios de la Mantis Espacial del Sector Dinares, estas criaturas pueden desplazarse en nubes oscurecedoras del cielo diezmando líneas de suministros sin dejar rastro.",
+    stats: {
+      hp: 120,
+      armor: 0,
+      speed: 4.0,
+      sight: 11,
+      damageGround: 9,
+      damageAir: 9,
+      attacksGround: true,
+      attacksAir: true,
+      range: 3,
+      attackSpeed: 1.09
+    },
+    cost: {
+      minerals: 100,
+      vespene: 100,
+      supply: 2,
+      time: 24
+    },
+    counters: {
+      strongAgainst: ['Siege Tank Crucio', 'VCE (SCV T-280)', 'Vulture', 'Carrier'],
+      weakAgainst: ['Marine', 'Goliat Mark IV', 'Phoenix', 'Archon']
+    },
+    abilities: [
+      {
+        id: 'glaive_wurm',
+        name: 'Gusano Glaive Rebotador',
+        hotkey: 'G',
+        icon: '🪱',
+        iconImg: '/icons/attack.png',
+        description: "Dispara un parásito que rebota en hasta 3 objetivos consecutivos infligiendo daño en cadena.",
+        animationTrigger: 'attack',
+        soundType: 'bio',
+        vfx: 'burst'
+      }
+    ],
+    modelConfig: {
+      meshType: 'mutalisk',
+      glbPath: '/models/mutalisk.glb',
+      texturePath: '/models/mutalisk_diffuse.png',
+      primaryColor: '#7e22ce',
+      secondaryColor: '#1e1b4b',
+      glowColor: '#c084fc',
+      scale: 1.3,
+      yOffset: 0.65,
+      hasWings: true
     }
   },
   {
     id: 'ultralisk',
     name: 'Ultralisk',
-    title: 'Monstruosidad Masiva de Ruptura',
+    title: 'Monstruosidad de Asedio del Enjambre',
     race: 'zerg',
     category: 'units',
     tier: 3,
-    role: 'Tanque Biológico Terrestre Devastador',
+    role: 'Ariete Terrestre Masivo / Rompelíneas',
     attributeTypes: ['Biológico', 'Blindado', 'Masivo'],
-    quote: "*Rugido titánico que hace temblar la corteza planetaria*",
+    quote: "*Bramido ensordecedor que hace temblar la tierra*",
     quotes: [
-      "*Rugido titánico estremecedor*",
-      "*Impacto de colmillos Kaiser contra el suelo*",
-      "*Avance implacable de toneladas de quitina*"
+      "*Bramido ensordecedor que hace temblar la tierra*",
+      "*Chasquido demoledor de cuchillas Kaiser*",
+      "*Crujido sísmico de corazas quitinosas pesadas*"
     ],
-    description: "El ápice de la evolución terrestre del Enjambre. Un coloso acorazado con dos pares de cuchillas Kaiser de mono-moléculas capaces de cercenar mechas y tanques de un solo tajo.",
-    lore: "Nacidos de los pacíficos herbívoros Brontolith, los ultraliscos poseen un exoesqueleto tan denso que rechaza fuego de artillería pesada y se regenera constantemente en el campo de batalla.",
+    portraitPath: '/portraits/ultralisk.jpg',
+    audioClips: [
+      '/sounds/zergling_attack.wav'
+    ],
+    backgroundScene: '/backgrounds/char_volcano.jpg',
+    description: "El coloso viviente del Enjambre. Cuatro gigantescas cuchillas Kaiser de monomolécula cortan tanques de asedio y fortificaciones como si fueran papel.",
+    lore: "Evolucionados del pacífico Taurenodonte, estas bestias del tamaño de edificios caminan sobre tormentas de fuego láser casi imperturbables gracias a su coraza quitinosa multicapa.",
     stats: {
       hp: 500,
-      armor: 2, // Up to 6+
+      armor: 2,
       speed: 4.13,
       sight: 9,
-      damageGround: 35, // Cleave AoE
+      damageGround: 35,
       damageAir: 0,
       attacksGround: true,
       attacksAir: false,
@@ -718,29 +1093,18 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 55
     },
     counters: {
-      strongAgainst: ['Marine', 'Stalker', 'Hydralisk', 'Zealot'],
+      strongAgainst: ['Marine', 'Stalker', 'Zealot', 'Hydralisk'],
       weakAgainst: ['Immortal', 'Ghost', 'Liberator', 'Void Ray']
     },
     abilities: [
       {
         id: 'kaiser_cleave',
-        name: 'Hojas Kaiser Hendidoras',
+        name: 'Tajo Hendidor Kaiser',
         hotkey: 'K',
         icon: '⚔️',
-        description: "Blandir las cuatro espadas de hueso en un arco de 180 grados, despedazando a todas las unidades enemigas en un área frontal masiva.",
-        cooldown: 5,
+        iconImg: '/icons/attack.png',
+        description: "Bandea sus cuchillas monomoleculares en un arco de 180 grados dañando a todos los enemigos adyacentes.",
         animationTrigger: 'attack',
-        soundType: 'bio',
-        vfx: 'burst'
-      },
-      {
-        id: 'burrow_charge',
-        name: 'Carga de Embate Subterránea',
-        hotkey: 'C',
-        icon: '💥',
-        description: "Se sumerge bajo tierra y embiste violentamente a gran velocidad hacia la formación enemiga, levantándolos por los aires.",
-        cooldown: 20,
-        animationTrigger: 'charge',
         soundType: 'bio',
         vfx: 'burst'
       }
@@ -748,58 +1112,58 @@ export const SC2_ENTITIES: SC2Entity[] = [
     modelConfig: {
       meshType: 'ultralisk',
       primaryColor: '#581c87',
-      secondaryColor: '#991b1b',
-      glowColor: '#ec4899',
+      secondaryColor: '#172554',
+      glowColor: '#a855f7',
       scale: 1.6,
-      yOffset: 0.2,
-      glowIntensity: 1.8
+      yOffset: 0.1
     }
   },
-
-  // ==========================================
-  // ZERG - HEROES
-  // ==========================================
   {
     id: 'kerrigan_queen',
     name: 'Sarah Kerrigan',
-    title: 'La Reina de Espadas / Reina Primigenia',
+    title: 'La Reina de Espadas / Gobernanta Suprema del Enjambre',
     race: 'zerg',
     category: 'heroes',
     tier: 4,
-    role: 'Monarca del Enjambre / Deidad Psiónica',
+    role: 'Deidad Psiónica Zerg / Soberana del Enjambre',
     attributeTypes: ['Biológico', 'Psiónico', 'Héroe'],
-    quote: "Yo soy el Enjambre. Los ejércitos caerán, los mundos arderán.",
+    quote: "Yo soy el Enjambre. Los mundos arderán a mi paso.",
     quotes: [
-      "Yo soy el Enjambre. Los ejércitos caerán, los mundos arderán.",
-      "Mi venganza es inevitable.",
-      "El poder que corre por mis venas desafía a los mismos dioses.",
-      "Siente la furia de mil millones de criaturas."
+      "Yo soy el Enjambre. Los mundos arderán a mi paso.",
+      "No hay salvación, solo obediencia.",
+      "Mi furia no conoce límites.",
+      "El Sector Koprulu me pertenecerá."
     ],
-    description: "Antigua fantasma terran capturada y transmutada en el planeta Char por el Supercerebro. Tras su transformación en Zerus en la Reina Primigenia, sus poderes psiónicos rivalizan con los de los Xel'Naga.",
-    lore: "Kerrigan es la figura más temida del universo conocido. Con alas óseas letales y tormentas psiónicas de energía púrpura, doblegó tanto al Dominio de Mengsk como a las flotas de Amon para salvar la galaxia.",
+    portraitPath: '/portraits/kerrigan.jpg',
+    audioClips: [
+      '/sounds/hydralisk_attack.wav'
+    ],
+    backgroundScene: '/backgrounds/char_volcano.jpg',
+    description: "Antigua agente Ghost terran traicionada por Arcturus Mengsk y renacida en la crisálida de Char como la Reina de Espadas, la entidad psiónica más poderosa del universo.",
+    lore: "Con una mezcla inigualable de intelecto humano y voracidad zerg, Kerrigan doblegó al Cerebrado Supremo, derrotó las flotas unidas del Directorio de la Tierra y dominó Koprulu.",
     stats: {
       hp: 1000,
-      armor: 3,
-      energy: 250,
-      maxEnergy: 250,
+      armor: 4,
+      energy: 300,
+      maxEnergy: 300,
       speed: 3.5,
       sight: 12,
-      damageGround: 60,
-      damageAir: 60,
+      damageGround: 50,
+      damageAir: 50,
       attacksGround: true,
       attacksAir: true,
       range: 6,
-      attackSpeed: 0.75
+      attackSpeed: 0.7
     },
     cost: {
-      minerals: 500,
-      vespene: 300,
+      minerals: 600,
+      vespene: 400,
       supply: 6,
-      time: 60
+      time: 90
     },
     counters: {
-      strongAgainst: ['Marine', 'Hydralisk', 'Stalker', 'Thor'],
-      weakAgainst: ['Colossus', 'Tempest', 'Battlecruiser']
+      strongAgainst: ['Jim Raynor', 'Artanis', 'Thor', 'Archon'],
+      weakAgainst: ['Flotas masivas concentradas', 'Bombardeo nuclear simultáneo']
     },
     abilities: [
       {
@@ -807,7 +1171,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
         name: 'Explosión Cinética Psiónica',
         hotkey: 'Q',
         icon: '💥',
-        description: "Canaliza un rayo de choque de energía psiónica pura concentrada que causa 300 de daño letal a un solo objetivo a distancia extrema.",
+        iconImg: '/icons/emp_shockwave.png',
+        description: "Concentra energía psiónica destructiva en un solo blanco infringiendo 300 de daño inmediato.",
         energyCost: 50,
         cooldown: 8,
         animationTrigger: 'special',
@@ -815,219 +1180,62 @@ export const SC2_ENTITIES: SC2Entity[] = [
         vfx: 'beam'
       },
       {
-        id: 'psionic_shift',
-        name: 'Desplazamiento Psiónico Sombrío',
-        hotkey: 'W',
-        icon: '🌪️',
-        description: "Se propulsa a través de las líneas enemigas con sus alas de hueso envueltas en llamas violetas, dañando a todos los enemigos en su trayectoria.",
-        energyCost: 50,
-        cooldown: 10,
-        animationTrigger: 'attack',
-        soundType: 'bio',
-        vfx: 'burst'
-      },
-      {
         id: 'apocalypse',
-        name: 'Apocalipsis del Enjambre',
+        name: 'Apocalipsis Psiónico',
         hotkey: 'R',
         icon: '🌋',
-        description: "Desata una detonación psíquica apocalíptica que arrasa toda la zona con 500 de daño masivo continuo.",
+        iconImg: '/icons/nuke_strike.png',
+        description: "Desata una conflagración psiónica masiva que vaporiza todas las unidades enemigas en un radio colosal.",
         energyCost: 100,
-        cooldown: 90,
-        animationTrigger: 'storm',
+        cooldown: 60,
+        animationTrigger: 'special',
         soundType: 'explosion',
-        vfx: 'lightning'
+        vfx: 'burst'
       }
     ],
     modelConfig: {
-      meshType: 'kerrigan_queen',
-      primaryColor: '#3b0764',
-      secondaryColor: '#be185d',
-      glowColor: '#c084fc',
+      meshType: 'kerrigan',
+      primaryColor: '#6b21a8',
+      secondaryColor: '#09090b',
+      glowColor: '#e11d48',
       scale: 1.25,
-      yOffset: 0.1,
-      hasWings: true,
-      glowIntensity: 2.2
-    }
-  },
-  {
-    id: 'abathur',
-    name: 'Abathur',
-    title: 'Maestro de la Evolución',
-    race: 'zerg',
-    category: 'heroes',
-    tier: 4,
-    role: 'Ingeniero Genético / Asimilador de ADN',
-    attributeTypes: ['Biológico', 'Héroe'],
-    quote: "Secuencias de ADN imperfectas. Requieren optimización.",
-    quotes: [
-      "Secuencias de ADN imperfectas. Requieren optimización.",
-      "Girar hebras. Mejorar quitina. Más dientes.",
-      "Sin desperdicio. Todo organismo consumido sirve al Enjambre.",
-      "Evolución nunca termina."
-    ],
-    description: "El genio biológico detrás de cada mutación del Enjambre. Diseñado por el Supercerebro para manipular hebras de ADN y asimilar rasgos ventajosos de todas las especies del cosmos.",
-    lore: "Abathur habita en el pozo de evolución del Leviatán. Habla en frases fragmentadas y precisas, guiado por una obsesión implacable hacia la pureza genética y la eficiencia de matar.",
-    stats: {
-      hp: 600,
-      armor: 2,
-      energy: 200,
-      maxEnergy: 200,
-      speed: 2.0,
-      sight: 11,
-      damageGround: 25,
-      damageAir: 0,
-      attacksGround: true,
-      attacksAir: false,
-      range: 5,
-      attackSpeed: 1.2
-    },
-    cost: {
-      minerals: 350,
-      vespene: 200,
-      supply: 4,
-      time: 50
-    },
-    counters: {
-      strongAgainst: ['Infestor', 'High Templar'],
-      weakAgainst: ['Siege Tank', 'Carrier']
-    },
-    abilities: [
-      {
-        id: 'toxic_nest',
-        name: 'Nido Tóxico Venenoso',
-        hotkey: 'T',
-        icon: '☣️',
-        description: "Coloca una trampa biológica subterránea que estalla en humo ácido al paso del enemigo, reduciendo su armadura y ralentizándolo.",
-        energyCost: 25,
-        animationTrigger: 'special',
-        soundType: 'bio',
-        vfx: 'cloud'
-      },
-      {
-        id: 'biomass_evolution',
-        name: 'Asimilación de Biomasa',
-        hotkey: 'B',
-        icon: '🧬',
-        description: "Recolecta biomasa residual de caídos para mutar instantáneamente a las tropas aliadas con escamas más gruesas y regeneración.",
-        cooldown: 30,
-        animationTrigger: 'stim',
-        soundType: 'bio',
-        vfx: 'sparks'
-      }
-    ],
-    modelConfig: {
-      meshType: 'abathur',
-      primaryColor: '#365314',
-      secondaryColor: '#14532d',
-      glowColor: '#84cc16',
-      scale: 1.3,
-      yOffset: 0.1,
-      glowIntensity: 1.7
+      yOffset: 0.1
     }
   },
 
   // ==========================================
-  // ZERG - BUILDINGS
-  // ==========================================
-  {
-    id: 'hatchery',
-    name: 'Criadero (Hatchery)',
-    title: 'Nido Central y Productor de Larvas',
-    race: 'zerg',
-    category: 'buildings',
-    tier: 1,
-    role: 'Engendrador Principal / Expansor de Biomateria',
-    attributeTypes: ['Estructura', 'Biológico', 'Blindado'],
-    quote: "*Pulsaciones orgánicas del corazón de la colmena*",
-    quotes: [
-      "*Latidos sordos de arterias gigantes*",
-      "*Exudación de biomateria viviente*",
-      "*Siseo de larvas recién nacidas*"
-    ],
-    description: "El organismo corazón de cualquier base Zerg. Genera biomateria viviente sobre la cual crecen las estructuras y produce larvas constantes que mutan en cualquier unidad del Enjambre.",
-    lore: "Los criaderos están vivos; respiran, sangran y se curan por sí mismos. Conforme la colonia acumula nutrientes, el criadero puede mutar en Guarida (Lair) y posteriormente en Colmena (Hive).",
-    stats: {
-      hp: 1500,
-      armor: 1,
-      speed: 0,
-      sight: 10,
-      attacksGround: false,
-      attacksAir: false
-    },
-    cost: {
-      minerals: 300,
-      vespene: 0,
-      supply: 0,
-      time: 71
-    },
-    counters: {
-      strongAgainst: [],
-      weakAgainst: ['Siege Tank', 'Battlecruiser', 'Carrier']
-    },
-    abilities: [
-      {
-        id: 'inject_larva',
-        name: 'Inyectar Larvas Nutricionales',
-        hotkey: 'V',
-        icon: '🐛',
-        description: "Inyecta un fluido celular de Reina que genera 3 larvas adicionales en 29 segundos.",
-        cooldown: 29,
-        animationTrigger: 'special',
-        soundType: 'bio',
-        vfx: 'sparks'
-      },
-      {
-        id: 'mutate_lair',
-        name: 'Mutar en Guarida (Lair)',
-        hotkey: 'L',
-        icon: '🏰',
-        description: "Engrosa las paredes orgánicas y desbloquea el acceso a tecnologías de nivel 2.",
-        cooldown: 57,
-        animationTrigger: 'transform',
-        soundType: 'bio',
-        vfx: 'cloud'
-      }
-    ],
-    modelConfig: {
-      meshType: 'hatchery',
-      primaryColor: '#4a044e',
-      secondaryColor: '#831843',
-      glowColor: '#d946ef',
-      scale: 1.5,
-      yOffset: 0.3,
-      glowIntensity: 1.6
-    }
-  },
-
-  // ==========================================
-  // PROTOSS - UNITS
+  // PROTOSS - UNITS, HEROES & BUILDINGS
   // ==========================================
   {
     id: 'zealot',
-    name: 'Zealot',
-    title: 'Guerrero Templario de Aiur',
+    name: 'Fanático (Zealot)',
+    title: 'Guerrero de la Orden Templaria',
     race: 'protoss',
     category: 'units',
     tier: 1,
-    role: 'Vanguardia de Asalto Cuerpo a Cuerpo',
-    attributeTypes: ['Biológico', 'Ligero', 'Psiónico'],
+    role: 'Vanguardia Cuerpo a Cuerpo / Armadura de Plasma',
+    attributeTypes: ['Biológico', 'Ligero'],
     quote: "¡Mi vida por Aiur!",
     quotes: [
       "¡Mi vida por Aiur!",
-      "El honor me guía.",
-      "¡Que el Khala purifique sus almas!",
-      "Luchamos hasta el final."
+      "Honor a los Primeros Nacidos.",
+      "Sentirás la furia de las cuchillas psiónicas.",
+      "El Khala nos guía."
     ],
-    description: "Guerreros veteranos imbuidos de la energía del Khala. Equipados con exoesqueletos ceremoniales dorados y brazaletes de enfoque que canalizan su poder psiónico en filos gemelos de energía pura.",
-    lore: "Los fanáticos de la orden Templaria han dedicado siglos enteros a la meditación bélica. Cuando desatan la habilidad de Carga, acortan distancias a velocidades sobrehumanas para cercenar a los enemigos de la Primera Dinastía.",
+    portraitPath: '/portraits/zealot.png',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "Los campeones templarios del Khala. Portan servoarmaduras doradas de aleación fotónica y dos cuchillas psiónicas condensadas de energía pura que brotan de sus muñecas.",
+    lore: "Entrenados desde milenios en las artes marciales del Khala, los fanáticos no conocen el miedo ni la duda. Marchan hacia el combate dispuestos a inmolarse por la gloria de su gente.",
     stats: {
       hp: 100,
       shields: 50,
       armor: 1,
       speed: 3.15,
       sight: 9,
-      damageGround: 16, // 8 x 2
+      damageGround: 16,
       damageAir: 0,
       attacksGround: true,
       attacksAir: false,
@@ -1041,60 +1249,56 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 27
     },
     counters: {
-      strongAgainst: ['Zergling', 'Marauder', 'Immortal'],
-      weakAgainst: ['Roach', 'Hellion', 'Colossus', 'Baneling']
+      strongAgainst: ['Marine', 'Zergling', 'Marauder', 'Immortal'],
+      weakAgainst: ['Hellion', 'Baneling', 'Colossus', 'Mutalisk']
     },
     abilities: [
       {
         id: 'charge',
-        name: 'Carga Psiónica de Asalto',
+        name: 'Carga Psiónica',
         hotkey: 'C',
         icon: '⚡',
-        description: "Se propulsa hacia el enemigo a velocidad hipersónica con un estallido psíquico que inflige un golpe inicial demoledor.",
+        iconImg: '/icons/train_zealot.png',
+        description: "Acelera instantáneamente a velocidad supersónica hacia el enemigo, asestando un golpe inicial potenciado.",
         cooldown: 7,
         animationTrigger: 'charge',
         soundType: 'teleport',
-        vfx: 'beam'
-      },
-      {
-        id: 'psi_blades',
-        name: 'Corte de Hojas Psiónicas',
-        hotkey: 'A',
-        icon: '⚔️',
-        description: "Descarga dos tajos cruzados de plasma psiónico puro que atraviesan escudos y carne viva.",
-        animationTrigger: 'attack',
-        soundType: 'laser',
-        vfx: 'beam'
+        vfx: 'sparks'
       }
     ],
     modelConfig: {
       meshType: 'zealot',
-      primaryColor: '#ca8a04',
-      secondaryColor: '#0284c7',
+      glbPath: '/models/zealot.glb',
+      primaryColor: '#eab308',
+      secondaryColor: '#1e3a8a',
       glowColor: '#38bdf8',
-      scale: 1.05,
-      yOffset: 0,
-      glowIntensity: 1.7
+      scale: 1.2,
+      yOffset: 0.05
     }
   },
   {
     id: 'stalker',
-    name: 'Stalker',
-    title: 'Caminante Cibernético Nerazim',
+    name: 'Acechador (Stalker)',
+    title: 'Caminante Bípode de los Templarios Tétricos',
     race: 'protoss',
     category: 'units',
-    tier: 2,
-    role: 'Hostigamiento Táctico / Teletransporte Corto',
-    attributeTypes: ['Mecánico', 'Blindado', 'Psiónico'],
+    tier: 1,
+    role: 'Movilidad Táctica / Teletransporte Blink',
+    attributeTypes: ['Mecánico', 'Blindado'],
     quote: "Servimos desde las sombras.",
     quotes: [
       "Servimos desde las sombras.",
-      "El Vacío me concede movimiento.",
-      "Frío y certero.",
-      "Destino alcanzado."
+      "El Vacío responderá.",
+      "Un paso en las tinieblas.",
+      "Parpadeo posicional completado."
     ],
-    description: "Máquinas cuadrúpedas tripuladas por la esencia sombría de los guerreros Nerazim (Templarios Tétricos). Disparan haces de partículas concentradas y dominan el arte del parpadeo dimensional.",
-    lore: "Inspirados en los antiguos Dragones de Aiur, los Nerazim diseñaron el Stalker para operar en sigilo y golpear las retaguardias enemigas antes de desaparecer sin dejar rastro en el Vacío.",
+    portraitPath: '/portraits/stalker.png',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "Chasis cuadrúpedo tripulado por la esencia de los Templarios Tétricos de Shakuras. Proyecta haces de partículas desintegradoras a tierra y aire con la capacidad de teletransportarse.",
+    lore: "Basado en la tecnología de los antiguos Dragones de Aiur pero imbuido de la energía del Vacío Nerazim, el Acechador es la máxima expresión de guerra relámpago e infiltración táctica.",
     stats: {
       hp: 80,
       shields: 80,
@@ -1106,7 +1310,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
       attacksGround: true,
       attacksAir: true,
       range: 6,
-      attackSpeed: 1.03
+      attackSpeed: 0.96
     },
     cost: {
       minerals: 125,
@@ -1115,155 +1319,61 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 30
     },
     counters: {
-      strongAgainst: ['Roach', 'Mutalisk', 'Reaper'],
-      weakAgainst: ['Immortal', 'Marauder', 'Zergling']
+      strongAgainst: ['Mutalisk', 'Reaper', 'Roach', 'Valkyrie'],
+      weakAgainst: ['Marauder', 'Zergling', 'Immortal', 'Siege Tank Crucio']
     },
     abilities: [
       {
         id: 'blink',
-        name: 'Parpadeo Dimensional (Blink)',
+        name: 'Traslación (Blink)',
         hotkey: 'B',
-        icon: '🌀',
-        description: "Se desmaterializa instantáneamente para reaparecer en cualquier posición visible a hasta 8 casillas de distancia, subiendo o bajando riscos.",
-        cooldown: 14,
+        icon: '🌌',
+        iconImg: '/icons/train_stalker.png',
+        description: "Teletransporta instantáneamente al Acechador a una distancia corta cruzando acantilados y barreras defensivas.",
+        cooldown: 8,
         animationTrigger: 'blink',
         soundType: 'teleport',
         vfx: 'teleport'
-      },
-      {
-        id: 'particle_disrupter',
-        name: 'Disruptor de Partículas del Vacío',
-        hotkey: 'A',
-        icon: '✨',
-        description: "Dispara un rayo de plasma cargado eficaz tanto contra amenazas terrestres como cazas aéreos.",
-        animationTrigger: 'attack',
-        soundType: 'laser',
-        vfx: 'beam'
       }
     ],
     modelConfig: {
       meshType: 'stalker',
-      primaryColor: '#334155',
-      secondaryColor: '#047857',
-      glowColor: '#34d399',
-      scale: 1.15,
-      yOffset: 0.1,
-      hasTurret: true,
-      glowIntensity: 1.9
-    }
-  },
-  {
-    id: 'high_templar',
-    name: 'High Templar',
-    title: 'Maestro de las Tormentas Psiónicas',
-    race: 'protoss',
-    category: 'units',
-    tier: 3,
-    role: 'Lanzador Psiónico de Área / Manipulador de Energía',
-    attributeTypes: ['Biológico', 'Psiónico', 'Ligero'],
-    quote: "Sentimos tu presencia.",
-    quotes: [
-      "Sentimos tu presencia.",
-      "El Khala es infinito.",
-      "¡Que el relámpago de Aiur caiga sobre ti!",
-      "Dos mentes se volverán una."
-    ],
-    description: "Los pensadores y místicos más veteranos de la casta Templaria. Flotan levitando sobre el suelo y pueden convocar una tormenta de relámpagos psiónicos que incinera ejércitos enteros.",
-    lore: "Capaces de sentir las fluctuaciones mentales a años luz de distancia. En situaciones extremas, dos Templarios pueden sacrificar su individualidad física para fusionarse en un colosal Arconte de pura energía psíquica.",
-    stats: {
-      hp: 40,
-      shields: 40,
-      armor: 0,
-      energy: 200,
-      maxEnergy: 200,
-      speed: 2.62,
-      sight: 10,
-      damageGround: 4,
-      damageAir: 0,
-      attacksGround: true,
-      attacksAir: false,
-      range: 6,
-      attackSpeed: 1.14
-    },
-    cost: {
-      minerals: 50,
-      vespene: 150,
-      supply: 2,
-      time: 39
-    },
-    counters: {
-      strongAgainst: ['Marine', 'Hydralisk', 'Zergling', 'Mutalisk'],
-      weakAgainst: ['Ghost (EMP)', 'Colossus', 'Stalker']
-    },
-    abilities: [
-      {
-        id: 'psionic_storm',
-        name: 'Tormenta Psiónica (Psi Storm)',
-        hotkey: 'T',
-        icon: '🌩️',
-        description: "Desata un torbellino eléctrico de energía pura que inflige 80 de daño continuo a todas las unidades enemigas en el área a lo largo de 3 segundos.",
-        energyCost: 75,
-        animationTrigger: 'storm',
-        soundType: 'lightning',
-        vfx: 'lightning'
-      },
-      {
-        id: 'feedback',
-        name: 'Retroalimentación (Feedback)',
-        hotkey: 'F',
-        icon: '⚡',
-        description: "Drena instantáneamente toda la energía de un taumaturgo o nave enemiga, infligiéndole daño directo proporcional a la energía consumida.",
-        energyCost: 50,
-        animationTrigger: 'attack',
-        soundType: 'lightning',
-        vfx: 'beam'
-      },
-      {
-        id: 'archon_merge',
-        name: 'Fusión de Arconte',
-        hotkey: 'C',
-        icon: '🔥',
-        description: "Dos templarios combinan sus almas en un vórtice llameante para reencarnar en un Arconte devastador.",
-        cooldown: 12,
-        animationTrigger: 'transform',
-        soundType: 'teleport',
-        vfx: 'burst'
-      }
-    ],
-    modelConfig: {
-      meshType: 'high_templar',
-      primaryColor: '#b45309',
-      secondaryColor: '#3b82f6',
-      glowColor: '#60a5fa',
-      scale: 1.05,
-      yOffset: 0.15,
-      glowIntensity: 2.0
+      primaryColor: '#0284c7',
+      secondaryColor: '#0f172a',
+      glowColor: '#38bdf8',
+      scale: 1.25,
+      yOffset: 0.15
     }
   },
   {
     id: 'colossus',
-    name: 'Colossus',
-    title: 'Andador de Guerra Purificador',
+    name: 'Coloso de Aiur (Colossus)',
+    title: 'Andador de Asedio de Cuatro Patas',
     race: 'protoss',
     category: 'units',
     tier: 3,
-    role: 'Destructor Antimasas Terrestre',
+    role: 'Aniquilación Masiva Terrestre / Láser Termal',
     attributeTypes: ['Mecánico', 'Blindado', 'Masivo'],
-    quote: "*Zumbido de armónicos psiónicos resonando en frecuencia ultra baja*",
+    quote: "*Zumbido ominoso de reactores de haz termal*",
     quotes: [
-      "*Zumbido de armónicos psiónicos*",
-      "*Focalización de lentes de calor térmico*",
-      "*Paso titánico sobre el acantilado*"
+      "*Zumbido ominoso de reactores de haz termal*",
+      "*Paso titánico sobre acantilados*",
+      "*Focalización de lentes de plasma gemelos*"
     ],
-    description: "Un coloso robótico con cuatro patas estilizadas tan altas que puede subir y bajar riscos sin esfuerzo. Barre el campo de batalla con dos haces de calor térmico superconcentrados que vaporizan infantería en masa.",
-    lore: "Construidos originalmente durante la era de la Discordia para purificar civilizaciones rebeldes, fueron prohibidos por el Cónclave debido a su brutal poder letal, y reactivados solo cuando el Enjambre amenazó con extinguir a Aiur.",
+    portraitPath: '/portraits/colossus.jpg',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "Titán bípedo ancestral que camina sobre elevaciones geográficas sin esfuerzo. Sus lanzas termales dobles barren franjas enteras de infantería enemiga convirtiéndola en ceniza.",
+    lore: "Creados durante la era de la discordia y sellados por el Cónclave debido a su destructividad excesiva, los Colosos fueron desenterrados nuevamente cuando el Enjambre amenazó con extinguir la raza.",
     stats: {
       hp: 200,
       shields: 150,
       armor: 1,
       speed: 3.15,
       sight: 10,
-      damageGround: 30, // Sweeping dual laser
+      damageGround: 30,
       damageAir: 0,
       attacksGround: true,
       attacksAir: false,
@@ -1278,71 +1388,65 @@ export const SC2_ENTITIES: SC2Entity[] = [
     },
     counters: {
       strongAgainst: ['Marine', 'Zergling', 'Hydralisk', 'Zealot'],
-      weakAgainst: ['Corruptor', 'Viking', 'Viper', 'Immortal']
+      weakAgainst: ['Viking', 'Corruptor', 'Tempest', 'Carrier']
     },
     abilities: [
       {
         id: 'thermal_lance',
-        name: 'Lanza Térmica Extendida',
-        hotkey: 'L',
+        name: 'Barrido de Lanza Térmica Extendido',
+        hotkey: 'T',
         icon: '🔥',
-        description: "Dispara dos rayos láser incandescentes paralelos que barren en arco horizontal, quemando una hilera completa de tropas terrestres.",
+        iconImg: '/icons/attack.png',
+        description: "Emite un haz lineal continuado de calor estelar que incinera múltiples unidades a lo largo de 9 casillas.",
         animationTrigger: 'attack',
         soundType: 'laser',
         vfx: 'beam'
-      },
-      {
-        id: 'cliff_walk',
-        name: 'Zancada Escarpada (Cliff Walk)',
-        hotkey: 'W',
-        icon: '🧗',
-        description: "Sus cuatro extremidades articuladas le permiten ignorar desniveles topográficos y caminar sobre cualquier acantilado.",
-        cooldown: 0,
-        animationTrigger: 'special',
-        soundType: 'mechanical',
-        vfx: 'sparks'
       }
     ],
     modelConfig: {
       meshType: 'colossus',
       primaryColor: '#eab308',
-      secondaryColor: '#0369a1',
+      secondaryColor: '#1e3a8a',
       glowColor: '#38bdf8',
-      scale: 1.5,
-      yOffset: 0.5,
-      glowIntensity: 2.1
+      scale: 1.6,
+      yOffset: 0.6
     }
   },
   {
     id: 'carrier',
-    name: 'Carrier',
-    title: 'Nave Nodriza de Cazas Interceptores',
+    name: 'Nave Portanaves (Carrier)',
+    title: 'Acorazado Capital de la Armada Dorada',
     race: 'protoss',
     category: 'units',
     tier: 3,
-    role: 'Nave Capital de Despliegue Aéreo',
+    role: 'Superioridad Aérea Estratégica / Enjambre de Interceptores',
     attributeTypes: ['Mecánico', 'Blindado', 'Masivo'],
-    quote: "Llegó el portanaves.",
+    quote: "La Portanaves ha llegado.",
     quotes: [
-      "Llegó el portanaves.",
-      "Lanzad a los interceptores.",
-      "Justicia desde los cielos.",
-      "Por la gloria de la flota."
+      "La Portanaves ha llegado.",
+      "Lanzando interceptores robóticos.",
+      "Justicia para el Khala.",
+      "El cielo pertenece a Aiur."
     ],
-    description: "El orgullo de la Gran Flota Protoss. Una nave capital masiva que no ataca directamente, sino que despliega enjambres de hasta 8 cazas interceptores automatizados ultrarrápidos que asedian al enemigo.",
-    lore: "Equipado con bahías de ensamblaje en tiempo real, un solo Carrier puede sitiar una fortaleza entera manteniendo a raya a las fuerzas de defensa aérea gracias a sus densos escudos de plasma.",
+    portraitPath: '/portraits/carrier.jpg',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "El buque insignia de la Armada Dorada. No dispara directamente, sino que fabrica y despliega hasta 8 interceptores no tripulados que saturan las defensas enemigas.",
+    lore: "Un símbolo indiscutible de grandeza. Cuando una flota de Carriers desciende sobre la órbita de un planeta, el espectáculo de cientos de cazas solares tejiendo patrones de fuego es la última vista de los enemigos de Aiur.",
     stats: {
       hp: 300,
       shields: 150,
       armor: 2,
       speed: 2.62,
       sight: 12,
-      damageGround: 40, // 8 interceptors
-      damageAir: 40,
+      damageGround: 8,
+      damageAir: 8,
       attacksGround: true,
       attacksAir: true,
       range: 8,
-      attackSpeed: 0.25
+      attackSpeed: 0.5
     },
     cost: {
       minerals: 350,
@@ -1351,291 +1455,54 @@ export const SC2_ENTITIES: SC2Entity[] = [
       time: 64
     },
     counters: {
-      strongAgainst: ['Thor', 'Hydralisk', 'Mutalisk', 'Roach'],
-      weakAgainst: ['Corruptor', 'Viper', 'Battlecruiser']
+      strongAgainst: ['Mutalisk', 'Thor', 'Siege Tank Crucio', 'Roach'],
+      weakAgainst: ['Corruptor', 'Viking', 'Tempest', 'Battlecruiser']
     },
     abilities: [
       {
         id: 'launch_interceptors',
-        name: 'Desplegar Enjambre de Interceptores',
+        name: 'Lanzar Interceptores',
         hotkey: 'I',
-        icon: '🛸',
-        description: "Lanza 8 cazas autónomos de alta velocidad que orbitan al objetivo y bombardean simultáneamente con rayos láser de plasma.",
-        cooldown: 8,
+        icon: '🛩️',
+        iconImg: '/icons/attack.png',
+        description: "Envía una nube de 8 cazas autónomos que rodean al objetivo y disparan láseres duales continuamente.",
         animationTrigger: 'attack',
         soundType: 'laser',
         vfx: 'beam'
-      },
-      {
-        id: 'graviton_catapult',
-        name: 'Catapulta Gravitatoria',
-        hotkey: 'G',
-        icon: '⚡',
-        description: "Lanza a todos los interceptores en menos de 0.5 segundos, maximizando la sorpresa táctica.",
-        cooldown: 30,
-        animationTrigger: 'special',
-        soundType: 'teleport',
-        vfx: 'sparks'
       }
     ],
     modelConfig: {
       meshType: 'carrier',
-      primaryColor: '#facc15',
-      secondaryColor: '#1e293b',
-      glowColor: '#38bdf8',
-      scale: 1.45,
-      yOffset: 0.7,
-      hasWings: true,
-      glowIntensity: 2.0
-    }
-  },
-
-  // ==========================================
-  // PROTOSS - HEROES
-  // ==========================================
-  {
-    id: 'artanis',
-    name: 'Artanis',
-    title: 'Jerarca de los Daelaam',
-    race: 'protoss',
-    category: 'heroes',
-    tier: 4,
-    role: 'Líder Supremo / Espadachín Dual de Aiur y Nerazim',
-    attributeTypes: ['Biológico', 'Héroe', 'Psiónico'],
-    quote: "¡Por Aiur! ¡Por todos nosotros!",
-    quotes: [
-      "¡Por Aiur! ¡Por todos nosotros!",
-      "Nuestra gente no será destruida.",
-      "Porto las hojas de Tassadar y Zeratul.",
-      "Unidos nos mantenemos, divididos caemos."
-    ],
-    description: "Jerarca supremo de la sociedad unificada Protoss. Porta simultáneamente una espada psiónica de luz azul del Khala y una espada verde sombría de los Nerazim en honor a su amigo caído Zeratul.",
-    lore: "Comandó la reconquista de Aiur durante Legacy of the Void al timón de la Lanza de Adun. Logró unir a las facciones fracturadas de Templarios, Purificadores y Tal'darim para expulsar al dios oscuro Amon.",
-    stats: {
-      hp: 600,
-      shields: 400,
-      armor: 3,
-      speed: 3.5,
-      sight: 12,
-      damageGround: 50,
-      damageAir: 0,
-      attacksGround: true,
-      attacksAir: false,
-      range: 0.2,
-      attackSpeed: 0.65
-    },
-    cost: {
-      minerals: 450,
-      vespene: 200,
-      supply: 5,
-      time: 60
-    },
-    counters: {
-      strongAgainst: ['Hydralisk', 'Marauder', 'Zealot', 'Roach'],
-      weakAgainst: ['Colossus', 'Battlecruiser', 'Ultralisk']
-    },
-    abilities: [
-      {
-        id: 'astral_wind',
-        name: 'Viento Astral Restaurador',
-        hotkey: 'Q',
-        icon: '✨',
-        description: "Emite una onda de energía cósmica que restaura 300 puntos de escudo y 150 de salud a Artanis y a todas las tropas aliadas cercanas.",
-        cooldown: 20,
-        animationTrigger: 'stim',
-        soundType: 'teleport',
-        vfx: 'shield'
-      },
-      {
-        id: 'orbital_strike',
-        name: 'Bombardeo Orbital de la Lanza de Adun',
-        hotkey: 'E',
-        icon: '🌟',
-        description: "Dispara cinco haces de plasma solar orbitales concentrados que vaporizan todo en la zona objetivo con 400 de daño.",
-        cooldown: 60,
-        animationTrigger: 'special',
-        soundType: 'lightning',
-        vfx: 'beam'
-      }
-    ],
-    modelConfig: {
-      meshType: 'artanis',
-      primaryColor: '#eab308',
-      secondaryColor: '#059669',
-      glowColor: '#34d399',
-      scale: 1.25,
-      yOffset: 0,
-      glowIntensity: 2.2
-    }
-  },
-  {
-    id: 'zeratul',
-    name: 'Zeratul',
-    title: 'Prelado Tétrico de los Nerazim',
-    race: 'protoss',
-    category: 'heroes',
-    tier: 4,
-    role: 'Asesino Sombrío / Profeta del Vacío',
-    attributeTypes: ['Biológico', 'Héroe', 'Psiónico'],
-    quote: "Golpeo desde las sombras más profundas.",
-    quotes: [
-      "Golpeo desde las sombras más profundas.",
-      "El Vacío me revela las verdades prohibidas.",
-      "Amon se alza, pero su victoria no está escrita.",
-      "Mi espada es la justicia silenciosa."
-    ],
-    description: "Legendario prelado de los Templarios Tétricos. Portador de la Hojadel Vacío esmeralda, Zeratul se desplaza permanentemente envuelto en el sigilo dimensional, investigando profecías milenarias de los Xel'Naga.",
-    lore: "Fue quien reveló la amenaza de Amon a James Raynor y Sarah Kerrigan. Dio su vida en Aiur para salvar a su discípulo Artanis de la corrupción mental del Khala.",
-    stats: {
-      hp: 450,
-      shields: 450,
-      armor: 2,
-      speed: 3.94,
-      sight: 12,
-      damageGround: 70,
-      damageAir: 0,
-      attacksGround: true,
-      attacksAir: false,
-      range: 0.1,
-      attackSpeed: 0.75
-    },
-    cost: {
-      minerals: 400,
-      vespene: 250,
-      supply: 4,
-      time: 55
-    },
-    counters: {
-      strongAgainst: ['Marine', 'Hydralisk', 'Siege Tank', 'High Templar'],
-      weakAgainst: ['Colossus', 'Archon', 'Infestor']
-    },
-    abilities: [
-      {
-        id: 'shadow_strike',
-        name: 'Golpe Sombrío de la Hoja del Vacío',
-        hotkey: 'Q',
-        icon: '🗡️',
-        description: "Se desliza detrás de la víctima y asesta un golpe letal con su hoja de energía esmeralda que ignora armaduras y causa 200 de daño crítico.",
-        cooldown: 8,
-        animationTrigger: 'attack',
-        soundType: 'laser',
-        vfx: 'beam'
-      },
-      {
-        id: 'void_prison',
-        name: 'Prisión del Vacío Temporal',
-        hotkey: 'W',
-        icon: '🔮',
-        description: "Encapsula un área en una burbuja de estasis temporal durante 12 segundos, congelando en el tiempo a todas las unidades y estructuras atrapadas.",
-        cooldown: 45,
-        animationTrigger: 'special',
-        soundType: 'teleport',
-        vfx: 'shield'
-      }
-    ],
-    modelConfig: {
-      meshType: 'zeratul',
-      primaryColor: '#0f172a',
-      secondaryColor: '#047857',
-      glowColor: '#10b981',
-      scale: 1.15,
-      yOffset: 0,
-      glowIntensity: 2.3
-    }
-  },
-
-  // ==========================================
-  // PROTOSS - BUILDINGS
-  // ==========================================
-  {
-    id: 'nexus',
-    name: 'Nexus',
-    title: 'Núcleo Conductor de la Base',
-    race: 'protoss',
-    category: 'buildings',
-    tier: 1,
-    role: 'Coordinador Psiónico / Extracción de Recursos',
-    attributeTypes: ['Estructura', 'Blindado', 'Psiónico'],
-    quote: "*Pulsación de la matriz sagrada de Aiur*",
-    quotes: [
-      "*Resonancia del cristal sagrado*",
-      "*Campo de teletransporte alineado*",
-      "*Sondas enlazadas a la red de recolección*"
-    ],
-    description: "La estructura más sagrada y vital de cualquier asentamiento Protoss. Canaliza la energía psíquica para deformar sondas desde el planeta natal y proyecta escudos de sobrecarga fotónica.",
-    lore: "Construidos alrededor de cristales Khaydarin purificados, los Nexus mantienen el anclaje dimensional necesario para desplegar edificios mediante deformación warp en mundos lejanos.",
-    stats: {
-      hp: 1000,
-      shields: 1000,
-      armor: 1,
-      energy: 200,
-      maxEnergy: 200,
-      speed: 0,
-      sight: 11,
-      attacksGround: false,
-      attacksAir: false
-    },
-    cost: {
-      minerals: 400,
-      vespene: 0,
-      supply: 0,
-      time: 71
-    },
-    counters: {
-      strongAgainst: [],
-      weakAgainst: ['Mutalisk', 'Siege Tank', 'Battlecruiser']
-    },
-    abilities: [
-      {
-        id: 'chrono_boost',
-        name: 'Impulso Cronos (Chrono Boost)',
-        hotkey: 'C',
-        icon: '⏩',
-        description: "Acelera el flujo temporal de un edificio aliado, incrementando su velocidad de investigación o producción en un 100% durante 20 segundos.",
-        energyCost: 50,
-        animationTrigger: 'special',
-        soundType: 'teleport',
-        vfx: 'sparks'
-      },
-      {
-        id: 'strategic_recall',
-        name: 'Rellamada Estratégica Masiva',
-        hotkey: 'R',
-        icon: '🌀',
-        description: "Teletransporta a todo un ejército aliado directamente hacia la ubicación del Nexus desde cualquier punto del mapa.",
-        energyCost: 100,
-        animationTrigger: 'transform',
-        soundType: 'teleport',
-        vfx: 'shield'
-      }
-    ],
-    modelConfig: {
-      meshType: 'nexus',
-      primaryColor: '#eab308',
-      secondaryColor: '#0284c7',
-      glowColor: '#38bdf8',
-      scale: 1.5,
-      yOffset: 0.4,
-      glowIntensity: 2.0
+      primaryColor: '#ca8a04',
+      secondaryColor: '#172554',
+      glowColor: '#67e8f9',
+      scale: 1.55,
+      yOffset: 0.9,
+      hasWings: true
     }
   },
   {
     id: 'pylon',
-    name: 'Pilón (Pylon)',
-    title: 'Canalizador del Campo Psiónico',
+    name: 'Pilón Protoss (Pylon)',
+    title: 'Nodo de Matriz Psiónica y Cristal Khaydarin',
     race: 'protoss',
     category: 'buildings',
     tier: 1,
-    role: 'Suministro y Matriz de Energía Psiónica',
-    attributeTypes: ['Estructura', 'Ligero', 'Psiónico'],
-    quote: "*Zumbido continuo del campo de energía de Khaydarin*",
+    role: 'Suministro Energético / Teletransporte Warp-in',
+    attributeTypes: ['Mecánico', 'Blindado', 'Estructura'],
+    quote: "Debes construir pilones adicionales.",
     quotes: [
-      "*Zumbido continuo del campo de energía de Khaydarin*",
-      "*Alimentando estructuras colindantes*",
-      "*Transmisión de teletransportación activa*"
+      "Debes construir pilones adicionales.",
+      "Matriz psiónica estabilizada.",
+      "Canalizando energía de la red de Aiur."
     ],
-    description: "Proyecta un campo de energía psiónica indispensable para energizar todos los edificios circundantes y otorgar suministro para sostener tropas.",
-    lore: "Sin el campo de un pilón, las estructuras Protoss quedan inertes y apagadas. Además, permite a los Warp Gates teletransportar tropas instantáneamente a cualquier parte donde se proyecte su campo.",
+    portraitPath: '/portraits/probe.png',
+    audioClips: [
+      '/sounds/not_enough_minerals.wav'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "Proyecta un campo de energía psiónica para alimentar edificios protoss y provee 8 puntos de suministro. Sirve como ancla dimensional para el teletransporte Warp de tropas.",
+    lore: "Tallados con cristales Khaydarin puros y armonizados con la frecuencia del Khala, los Pilones tejen la red invisible que mantiene operando a toda la civilización Protoss.",
     stats: {
       hp: 200,
       shields: 200,
@@ -1653,29 +1520,243 @@ export const SC2_ENTITIES: SC2Entity[] = [
     },
     counters: {
       strongAgainst: [],
-      weakAgainst: ['Mutalisk', 'Zergling', 'Reaper']
+      weakAgainst: ['Zergling', 'Baneling', 'Reaper']
     },
     abilities: [
       {
-        id: 'matrix_field',
-        name: 'Matriz Psiónica de Warp',
+        id: 'power_field',
+        name: 'Campo de Energía Psiónica',
         hotkey: 'P',
-        icon: '🔷',
-        description: "Proyecta un domo de resonancia de cristal que alimenta a las estructuras vecinas y permite la deformación instantánea de tropas de puerta de acceso.",
-        cooldown: 0,
+        icon: '⚡',
+        iconImg: '/icons/train_probe.png',
+        description: "Suministra energía fotónica a todas las estructuras adyacentes y habilita la invocación Warp de guerreros.",
         animationTrigger: 'special',
-        soundType: 'teleport',
+        soundType: 'lightning',
         vfx: 'shield'
       }
     ],
     modelConfig: {
       meshType: 'pylon',
+      glbPath: '/models/pylon.glb',
+      primaryColor: '#eab308',
+      secondaryColor: '#1e3a8a',
+      glowColor: '#38bdf8',
+      scale: 1.3,
+      yOffset: 0.1
+    }
+  },
+  {
+    id: 'photon_cannon',
+    name: 'Cañón de Fotones Protoss',
+    title: 'Defensa Estática Automatizada de Plasma',
+    race: 'protoss',
+    category: 'buildings',
+    tier: 1,
+    role: 'Defensa Base Multipropósito / Detección',
+    attributeTypes: ['Mecánico', 'Blindado', 'Estructura'],
+    quote: "Cañón de fotones activado y en guardia.",
+    quotes: [
+      "Cañón de fotones activado y en guardia.",
+      "Focalizando antimateria de plasma.",
+      "Intruso detectado en el perímetro."
+    ],
+    portraitPath: '/portraits/zealot.png',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "Plataforma defensiva automatizada de alta cadencia. Dispara orbes de plasma concentrado a tierra y aire, dotado de sensores detectores de unidades camufladas.",
+    lore: "Alimentado por el campo psiónico de un pilón, el Cañón de Fotones es capaz de vaporizar tanto infantería blindada como enjambres aéreos antes de que alcancen el núcleo colonial.",
+    stats: {
+      hp: 150,
+      shields: 150,
+      armor: 1,
+      speed: 0,
+      sight: 11,
+      damageGround: 20,
+      damageAir: 20,
+      attacksGround: true,
+      attacksAir: true,
+      range: 7,
+      attackSpeed: 0.89
+    },
+    cost: {
+      minerals: 150,
+      vespene: 0,
+      supply: 0,
+      time: 29
+    },
+    counters: {
+      strongAgainst: ['Mutalisk', 'Zergling', 'Marine', 'Banshee'],
+      weakAgainst: ['Siege Tank Crucio', 'Swarm Host', 'Brood Lord', 'Colossus']
+    },
+    abilities: [
+      {
+        id: 'plasma_burst',
+        name: 'Ráfaga de Fotones Concentrada',
+        hotkey: 'A',
+        icon: '💥',
+        iconImg: '/icons/attack.png',
+        description: "Dispara esferas de antimateria a objetivos aéreos o terrestres a gran velocidad.",
+        animationTrigger: 'attack',
+        soundType: 'laser',
+        vfx: 'beam'
+      }
+    ],
+    modelConfig: {
+      meshType: 'photon-cannon',
+      glbPath: '/models/photon-cannon.glb',
+      primaryColor: '#eab308',
+      secondaryColor: '#1e3a8a',
+      glowColor: '#38bdf8',
+      scale: 1.25,
+      yOffset: 0.1
+    }
+  },
+  {
+    id: 'artanis',
+    name: 'Artanis',
+    title: 'Jerarca de los Daelaam / Líder Supremo Protoss',
+    race: 'protoss',
+    category: 'heroes',
+    tier: 4,
+    role: 'Jerarca Supremo / Guerrero de Luz y Sombra',
+    attributeTypes: ['Biológico', 'Blindado', 'Héroe'],
+    quote: "¡Por Aiur, unidos venceremos!",
+    quotes: [
+      "¡Por Aiur, unidos venceremos!",
+      "La lanza de Adun responderá a mi llamado.",
+      "No descansaremos hasta que nuestro hogar sea libre.",
+      "El honor es nuestro mayor escudo."
+    ],
+    portraitPath: '/portraits/artanis.jpg',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "El joven líder que unió a los Templarios de Aiur y a los Nerazim en los Daelaam. Empuña la legendaria Lanza de Adun y dos cuchillas de luz solar y energía del Vacío.",
+    lore: "Ascendido al rango de Jerarca en los momentos más oscuros de la historia Protoss, Artanis lideró la reconquista de Aiur, cortó su cordón neural para liberarse de Amon y salvó a su especie del olvido.",
+    stats: {
+      hp: 500,
+      shields: 500,
+      armor: 4,
+      energy: 200,
+      maxEnergy: 200,
+      speed: 3.38,
+      sight: 12,
+      damageGround: 40,
+      damageAir: 40,
+      attacksGround: true,
+      attacksAir: true,
+      range: 2,
+      attackSpeed: 0.55
+    },
+    cost: {
+      minerals: 600,
+      vespene: 400,
+      supply: 6,
+      time: 80
+    },
+    counters: {
+      strongAgainst: ['Jim Raynor', 'Ultralisk', 'Thor', 'Colossus'],
+      weakAgainst: ['Kerrigan Reina de Espadas', 'Amon']
+    },
+    abilities: [
+      {
+        id: 'orbital_strike',
+        name: 'Ataque Orbital de la Lanza de Adun',
+        hotkey: 'O',
+        icon: '☀️',
+        iconImg: '/icons/yamato_cannon.png',
+        description: "Descarga 5 rayos solares abrasadores desde la órbita sobre las posiciones enemigas.",
+        energyCost: 100,
+        cooldown: 50,
+        animationTrigger: 'special',
+        soundType: 'laser',
+        vfx: 'beam'
+      }
+    ],
+    modelConfig: {
+      meshType: 'artanis',
+      glbPath: '/models/zealot.glb',
       primaryColor: '#facc15',
-      secondaryColor: '#38bdf8',
-      glowColor: '#67e8f9',
-      scale: 1.15,
-      yOffset: 0.2,
-      glowIntensity: 2.4
+      secondaryColor: '#1e40af',
+      glowColor: '#38bdf8',
+      scale: 1.35,
+      yOffset: 0.05
+    }
+  },
+  {
+    id: 'zeratul',
+    name: 'Zeratul',
+    title: 'Prelado Tétrico Nerazim / Profeta del Vacío',
+    race: 'protoss',
+    category: 'heroes',
+    tier: 4,
+    role: 'Asesino de las Sombras / Guerrero Psiónico Secreto',
+    attributeTypes: ['Biológico', 'Psiónico', 'Héroe'],
+    quote: "Viajo por las sombras para que otros vean la luz.",
+    quotes: [
+      "Viajo por las sombras para que otros vean la luz.",
+      "Las profecías Xel'Naga deben cumplirse.",
+      "Soy el viento frío de la noche.",
+      "¡Por el Vacío!"
+    ],
+    portraitPath: '/portraits/zeratul.jpg',
+    audioClips: [
+      '/sounds/marine_standin.mp3'
+    ],
+    backgroundScene: '/backgrounds/aiur_golden.jpg',
+    description: "El legendario guerrero Nerazim que descubrió la verdad sobre los híbridos y la profecía de Amon. Camuflado perpetuamente, ataca con su Warp Blade verde esmeralda.",
+    lore: "Cargando con la culpa de la caída de Aiur, Zeratul vagó por las estrellas buscando respuestas sobre el destino del universo. Su sacrificio permitió a Artanis despertar y liderar la resistencia final.",
+    stats: {
+      hp: 300,
+      shields: 250,
+      armor: 3,
+      energy: 150,
+      maxEnergy: 150,
+      speed: 3.75,
+      sight: 12,
+      damageGround: 85,
+      damageAir: 0,
+      attacksGround: true,
+      attacksAir: false,
+      range: 0.1,
+      attackSpeed: 0.75
+    },
+    cost: {
+      minerals: 450,
+      vespene: 300,
+      supply: 4,
+      time: 60
+    },
+    counters: {
+      strongAgainst: ['Ghost', 'Jim Raynor', 'Siege Tank Crucio', 'Hydralisk'],
+      weakAgainst: ['Kerrigan Reina de Espadas', 'Detectores masivos']
+    },
+    abilities: [
+      {
+        id: 'shadow_strike',
+        name: 'Golpe de las Sombras',
+        hotkey: 'W',
+        icon: '🗡️',
+        iconImg: '/icons/train_darktemplar.png',
+        description: "Se teleporta a la espalda del enemigo y asesta un golpe crítico instantáneo de 150 de daño.",
+        energyCost: 50,
+        cooldown: 8,
+        animationTrigger: 'special',
+        soundType: 'teleport',
+        vfx: 'teleport'
+      }
+    ],
+    modelConfig: {
+      meshType: 'zeratul',
+      glbPath: '/models/zealot.glb',
+      primaryColor: '#0f172a',
+      secondaryColor: '#059669',
+      glowColor: '#10b981',
+      scale: 1.25,
+      yOffset: 0.05
     }
   }
 ];

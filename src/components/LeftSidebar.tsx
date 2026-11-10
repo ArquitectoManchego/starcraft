@@ -59,7 +59,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
 
   const handleEntityClick = (entity: SC2Entity) => {
     soundEngine.playUIClick(selectedRace);
-    soundEngine.playVoiceQuote(entity.quote, entity.race);
+    soundEngine.playEntityVoice(entity);
     onSelectEntity(entity);
   };
 
@@ -82,7 +82,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                 : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
             }`}
           >
-            <Shield className="w-5 h-5 mb-1 text-cyan-400" />
+            <img src="/icons/terran.svg" alt="Terran" className="w-6 h-6 mb-1 object-contain" />
             <span className="font-sc2-display font-bold text-xs uppercase">Terran</span>
             <span className="text-[9px] font-sc2-mono text-cyan-500/80">DOMINIO</span>
           </button>
@@ -96,7 +96,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                 : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
             }`}
           >
-            <Sparkles className="w-5 h-5 mb-1 text-purple-400" />
+            <img src="/icons/zerg.svg" alt="Zerg" className="w-6 h-6 mb-1 object-contain" />
             <span className="font-sc2-display font-bold text-xs uppercase">Zerg</span>
             <span className="text-[9px] font-sc2-mono text-purple-500/80">ENJAMBRE</span>
           </button>
@@ -110,7 +110,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                 : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
             }`}
           >
-            <Crown className="w-5 h-5 mb-1 text-yellow-400" />
+            <img src="/icons/protoss.svg" alt="Protoss" className="w-6 h-6 mb-1 object-contain" />
             <span className="font-sc2-display font-bold text-xs uppercase">Protoss</span>
             <span className="text-[9px] font-sc2-mono text-yellow-500/80">DAELAAM</span>
           </button>
@@ -228,15 +228,23 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  {/* Color-coded Icon Box */}
+                  {/* Portrait Thumbnail / Icon Box */}
                   <div
-                    className="w-9 h-9 rounded flex items-center justify-center text-base font-bold shadow"
+                    className="w-10 h-10 rounded overflow-hidden flex items-center justify-center shrink-0 bg-black/70 border"
                     style={{
-                      backgroundColor: `${entity.modelConfig.primaryColor}33`,
-                      border: `1px solid ${entity.modelConfig.glowColor}`
+                      borderColor: isSelected ? entity.modelConfig.glowColor : '#334155'
                     }}
                   >
-                    <span>{entity.abilities[0]?.icon || '🛡️'}</span>
+                    {entity.portraitPath ? (
+                      <img
+                        src={entity.portraitPath}
+                        alt={entity.name}
+                        className="w-full h-full object-cover object-top"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span className="text-base">{entity.abilities[0]?.icon || '🛡️'}</span>
+                    )}
                   </div>
 
                   <div>

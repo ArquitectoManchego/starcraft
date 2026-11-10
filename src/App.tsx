@@ -23,7 +23,8 @@ export const App: React.FC = () => {
     showPostProcessing: true,
     theme: 'marsara',
     lightingIntensity: 1.0,
-    cameraPreset: 'isometric'
+    cameraPreset: 'isometric',
+    showBackgroundScene: true
   });
 
   // When race changes, update active entity to the first one of that race and switch theme & ambient
