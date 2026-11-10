@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --terran-accent: #38bdf8;
+    --terran-glow: rgba(56, 189, 248, 0.4);
+    --zerg-accent: #c084fc;
+    --zerg-glow: rgba(192, 132, 252, 0.4);
+    --protoss-accent: #facc15;
+    --protoss-glow: rgba(250, 204, 21, 0.4);
+  }
+
+  body {
+    background-color: #030712;
+    color: #f1f5f9;
+    font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  h1, h2, h3, .font-sc2-display {
+    font-family: 'Orbitron', monospace, sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  .font-sc2-mono {
+    font-family: 'Share Tech Mono', monospace;
+  }
+}
+
+/* Custom Scrollbar for Sci-Fi HUD */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.8);
+}
+
+/* CRT Scanline Effect */
+.crt-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* HUD Glowing Borders */
+.border-terran {
+  border-color: #0284c7;
+  box-shadow: 0 0 15px rgba(2, 132, 199, 0.25), inset 0 0 10px rgba(2, 132, 199, 0.15);
+}
+.border-zerg {
+  border-color: #9333ea;
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.25), inset 0 0 10px rgba(147, 51, 234, 0.15);
+}
+.border-protoss {
+  border-color: #eab308;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.25), inset 0 0 10px rgba(234, 179, 8, 0.15);
+}
+
+/* Button pulse animations */
+@keyframes sc2-pulse-glow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px currentColor); }
+}
+
+.sc2-glow-pulse {
+  animation: sc2-pulse-glow 2s infinite ease-in-out;
+}
