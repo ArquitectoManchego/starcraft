@@ -27,6 +27,10 @@ export const TurntableScene: React.FC<TurntableSceneProps> = ({
   const particlesRef = useRef<THREE.Points | null>(null);
   const textureLoaderRef = useRef<THREE.TextureLoader>(new THREE.TextureLoader());
   const gltfLoaderRef = useRef<GLTFLoader>(new GLTFLoader());
+  const clockRef = useRef<THREE.Clock>(new THREE.Clock());
+  const mixerRef = useRef<THREE.AnimationMixer | null>(null);
+  const actionsRef = useRef<Map<string, THREE.AnimationAction>>(new Map());
+  const currentActionRef = useRef<THREE.AnimationAction | null>(null);
 
   const animTimeRef = useRef<number>(0);
   const isInteractingRef = useRef<boolean>(false);
@@ -222,6 +226,13 @@ export const TurntableScene: React.FC<TurntableSceneProps> = ({
 
     setIsLoading(true);
 
+    if (mixerRef.current) {
+      mixerRef.current.stopAllAction();
+      mixerRef.current = null;
+    }
+    actionsRef.current.clear();
+    currentActionRef.current = null;
+
     if (modelGroupRef.current) {
       scene.remove(modelGroupRef.current);
       modelGroupRef.current = null;
@@ -241,15 +252,37 @@ export const TurntableScene: React.FC<TurntableSceneProps> = ({
           if (config.texturePath) {
             textureLoaderRef.current.load(config.texturePath, (tex) => {
               tex.flipY = false;
+              tex.colorSpace = THREE.SRGBColorSpace;
               loadedModel.traverse((child) => {
                 if ((child as THREE.Mesh).isMesh) {
                   const m = child as THREE.Mesh;
-                  m.material = new THREE.MeshStandardMaterial({
-                    map: tex,
-                    roughness: 0.5,
-                    metalness: entity.race === 'terran' ? 0.8 : 0.3,
-                    wireframe: settings.wireframe
-                  });
+                  if (m.material) {
+                    if (Array.isArray(m.material)) {
+                      m.material.forEach((mat) => {
+                        if ('map' in mat) {
+                          (mat as THREE.MeshStandardMaterial).map = tex;
+                          mat.needsUpdate = true;
+                        }
+                      });
+                    } else if ('map' in m.material) {
+                      (m.material as THREE.MeshStandardMaterial).map = tex;
+                      m.material.needsUpdate = true;
+                    } else {
+                      m.material = new THREE.MeshStandardMaterial({
+                        map: tex,
+                        roughness: 0.5,
+                        metalness: entity.race === 'terran' ? 0.7 : 0.25,
+                        wireframe: settings.wireframe
+                      });
+                    }
+                  } else {
+                    m.material = new THREE.MeshStandardMaterial({
+                      map: tex,
+                      roughness: 0.5,
+                      metalness: entity.race === 'terran' ? 0.7 : 0.25,
+                      wireframe: settings.wireframe
+                    });
+                  }
                   m.castShadow = true;
                   m.receiveShadow = true;
                 }
@@ -262,10 +295,41 @@ export const TurntableScene: React.FC<TurntableSceneProps> = ({
                 m.castShadow = true;
                 m.receiveShadow = true;
                 if (settings.wireframe && m.material) {
-                  (m.material as THREE.MeshStandardMaterial).wireframe = true;
+                  if (Array.isArray(m.material)) {
+                    m.material.forEach(mat => {
+                      if ('wireframe' in mat) (mat as THREE.MeshStandardMaterial).wireframe = true;
+                    });
+                  } else if ('wireframe' in m.material) {
+                    (m.material as THREE.MeshStandardMaterial).wireframe = true;
+                  }
                 }
               }
             });
+          }
+
+          // Skeletal animations from GLB
+          if (gltf.animations && gltf.animations.length > 0) {
+            const mixer = new THREE.AnimationMixer(loadedModel);
+            mixerRef.current = mixer;
+            const actMap = new Map<string, THREE.AnimationAction>();
+
+            gltf.animations.forEach((clip) => {
+              const act = mixer.clipAction(clip);
+              actMap.set(clip.name.toLowerCase(), act);
+            });
+            actionsRef.current = actMap;
+
+            // Find default stand or idle animation
+            let idleClip = gltf.animations.find(c =>
+              c.name.toLowerCase().includes('stand') ||
+              c.name.toLowerCase().includes('idle')
+            ) || gltf.animations[0];
+
+            if (idleClip) {
+              const idleAct = mixer.clipAction(idleClip);
+              idleAct.play();
+              currentActionRef.current = idleAct;
+            }
           }
 
           // Compute bounding box and normalize scale & center
@@ -335,13 +399,84 @@ export const TurntableScene: React.FC<TurntableSceneProps> = ({
     group.scale.setScalar(config.scale);
   };
 
+  // Handle active animation trigger from command card abilities & hotkeys
+  useEffect(() => {
+    const mixer = mixerRef.current;
+    if (!mixer || actionsRef.current.size === 0) return;
+
+    const animKey = (activeAnimation || 'idle').toLowerCase();
+    if (animKey === 'idle') {
+      let standAct: THREE.AnimationAction | undefined;
+      for (const [name, act] of actionsRef.current.entries()) {
+        if (name.includes('stand') || name.includes('idle')) {
+          standAct = act;
+          break;
+        }
+      }
+      if (standAct && currentActionRef.current !== standAct) {
+        currentActionRef.current?.fadeOut(0.25);
+        standAct.reset().fadeIn(0.25).play();
+        currentActionRef.current = standAct;
+      }
+      return;
+    }
+
+    let targetAct: THREE.AnimationAction | undefined;
+    for (const [name, act] of actionsRef.current.entries()) {
+      if (animKey === 'attack' && name.includes('attack')) {
+        targetAct = act;
+        break;
+      } else if (
+        (animKey === 'stim' || animKey === 'special') &&
+        (name.includes('spell') || name.includes('fidget') || name.includes('dance') || name.includes('morph'))
+      ) {
+        targetAct = act;
+        break;
+      } else if (animKey === 'walk' && (name.includes('walk') || name.includes('run'))) {
+        targetAct = act;
+        break;
+      }
+    }
+
+    if (targetAct && currentActionRef.current !== targetAct) {
+      currentActionRef.current?.fadeOut(0.2);
+      targetAct.reset().fadeIn(0.2).play();
+      currentActionRef.current = targetAct;
+
+      if (animKey === 'attack' || animKey === 'stim' || animKey === 'special') {
+        targetAct.setLoop(THREE.LoopOnce, 1);
+        targetAct.clampWhenFinished = true;
+        const onFinished = (e: any) => {
+          if (e.action === targetAct) {
+            mixer.removeEventListener('finished', onFinished);
+            for (const [name, act] of actionsRef.current.entries()) {
+              if (name.includes('stand') || name.includes('idle')) {
+                targetAct?.fadeOut(0.3);
+                act.reset().fadeIn(0.3).play();
+                currentActionRef.current = act;
+                break;
+              }
+            }
+            if (onAnimationEnd) onAnimationEnd();
+          }
+        };
+        mixer.addEventListener('finished', onFinished);
+      }
+    }
+  }, [activeAnimation, onAnimationEnd]);
+
   // Render & Animation Loop
   useEffect(() => {
     let animId: number;
 
     const render = () => {
-      animTimeRef.current += 0.016;
+      const delta = clockRef.current.getDelta();
+      animTimeRef.current += delta;
       const t = animTimeRef.current;
+
+      if (mixerRef.current) {
+        mixerRef.current.update(delta);
+      }
 
       if (platformGroupRef.current && settings.autoRotate && !isInteractingRef.current) {
         platformGroupRef.current.rotation.y += 0.008 * settings.rotateSpeed;

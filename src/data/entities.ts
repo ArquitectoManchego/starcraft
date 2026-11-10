@@ -82,6 +82,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
     modelConfig: {
       meshType: 'marine',
       glbPath: '/models/marine.glb',
+      texturePath: '/models/marine_diffuse.png',
       primaryColor: '#2563eb',
       secondaryColor: '#475569',
       glowColor: '#38bdf8',
@@ -550,12 +551,13 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'ghost',
-      glbPath: '/models/marine.glb',
+      glbPath: '/models/ghost.glb',
+      texturePath: '/models/ghost_diffuse.png',
       primaryColor: '#1e293b',
       secondaryColor: '#dc2626',
       glowColor: '#ef4444',
-      scale: 1.05,
-      yOffset: -0.1
+      scale: 1.1,
+      yOffset: 0
     }
   },
 
@@ -628,6 +630,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
     modelConfig: {
       meshType: 'raynor',
       glbPath: '/models/marine.glb',
+      texturePath: '/models/marine_diffuse.png',
       primaryColor: '#0f172a',
       secondaryColor: '#dc2626',
       glowColor: '#f97316',
@@ -976,6 +979,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
     modelConfig: {
       meshType: 'hydralisk',
       glbPath: '/models/hydralisk.glb',
+      texturePath: '/models/hydralisk_diffuse.png',
       primaryColor: '#9333ea',
       secondaryColor: '#3b0764',
       glowColor: '#a855f7',
@@ -1111,6 +1115,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'ultralisk',
+      glbPath: '/models/roach.glb',
+      texturePath: '/models/roach_diffuse.png',
       primaryColor: '#581c87',
       secondaryColor: '#172554',
       glowColor: '#a855f7',
@@ -1195,6 +1201,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'kerrigan',
+      glbPath: '/models/queen.glb',
+      texturePath: '/models/queen_diffuse.png',
       primaryColor: '#6b21a8',
       secondaryColor: '#09090b',
       glowColor: '#e11d48',
@@ -1269,6 +1277,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
     modelConfig: {
       meshType: 'zealot',
       glbPath: '/models/zealot.glb',
+      texturePath: '/models/zealot_diffuse.png',
       primaryColor: '#eab308',
       secondaryColor: '#1e3a8a',
       glowColor: '#38bdf8',
@@ -1338,6 +1347,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'stalker',
+      glbPath: '/models/stalker.glb',
+      texturePath: '/models/stalker_diffuse.png',
       primaryColor: '#0284c7',
       secondaryColor: '#0f172a',
       glowColor: '#38bdf8',
@@ -1405,6 +1416,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'colossus',
+      glbPath: '/models/colossus.glb',
+      texturePath: '/models/colossus_diffuse.png',
       primaryColor: '#eab308',
       secondaryColor: '#1e3a8a',
       glowColor: '#38bdf8',
@@ -1473,12 +1486,13 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'carrier',
+      glbPath: '/models/immortal.glb',
+      texturePath: '/models/immortal_diffuse.png',
       primaryColor: '#ca8a04',
       secondaryColor: '#172554',
       glowColor: '#67e8f9',
       scale: 1.55,
-      yOffset: 0.9,
-      hasWings: true
+      yOffset: 0.4
     }
   },
   {
@@ -1536,8 +1550,9 @@ export const SC2_ENTITIES: SC2Entity[] = [
       }
     ],
     modelConfig: {
-      meshType: 'pylon',
-      glbPath: '/models/pylon.glb',
+      meshType: 'nexus',
+      glbPath: '/models/nexus.glb',
+      texturePath: '/models/nexus_diffuse.png',
       primaryColor: '#eab308',
       secondaryColor: '#1e3a8a',
       glowColor: '#38bdf8',
@@ -1604,8 +1619,9 @@ export const SC2_ENTITIES: SC2Entity[] = [
       }
     ],
     modelConfig: {
-      meshType: 'photon-cannon',
-      glbPath: '/models/photon-cannon.glb',
+      meshType: 'assimilator',
+      glbPath: '/models/assimilator.glb',
+      texturePath: '/models/assimilator_diffuse.png',
       primaryColor: '#eab308',
       secondaryColor: '#1e3a8a',
       glowColor: '#38bdf8',
@@ -1679,6 +1695,7 @@ export const SC2_ENTITIES: SC2Entity[] = [
     modelConfig: {
       meshType: 'artanis',
       glbPath: '/models/zealot.glb',
+      texturePath: '/models/zealot_diffuse.png',
       primaryColor: '#facc15',
       secondaryColor: '#1e40af',
       glowColor: '#38bdf8',
@@ -1751,7 +1768,8 @@ export const SC2_ENTITIES: SC2Entity[] = [
     ],
     modelConfig: {
       meshType: 'zeratul',
-      glbPath: '/models/zealot.glb',
+      glbPath: '/models/stalker.glb',
+      texturePath: '/models/stalker_diffuse.png',
       primaryColor: '#0f172a',
       secondaryColor: '#059669',
       glowColor: '#10b981',
